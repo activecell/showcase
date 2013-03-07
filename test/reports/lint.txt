@@ -1,0 +1,24 @@
+
+  ✓ [1m[32m./examples/public/coffee/base.coffee[39m[22m
+  ✓ [1m[32m./examples/public/coffee/examples.coffee[39m[22m
+  ✓ [1m[32m./server/compiler.coffee[39m[22m
+  ✓ [1m[32m./server/config.coffee[39m[22m
+  ✓ [1m[32m./server/router.coffee[39m[22m
+  ✓ [1m[32m./server/server.coffee[39m[22m
+  ✓ [1m[32m./src/coffee/showcase.coffee[39m[22m
+  ✓ [1m[32m./test/index.coffee[39m[22m
+  ✓ [1m[32m./test/integration/base.coffee[39m[22m
+  ✓ [1m[32m./test/integration/index.coffee[39m[22m
+  ✓ [1m[32m./test/lint.coffee[39m[22m
+  ✓ [1m[32m./test/server/index.coffee[39m[22m
+  ✓ [1m[32m./test/unit/base_test.coffee[39m[22m
+  ✓ [1m[32m./test/unit/index.coffee[39m[22m
+  ✗ [1m[31m./test/watcher.coffee[39m[22m
+     ✗ [31m#16[39m: Line exceeds maximum allowed length.
+     ✗ [31m#17[39m: Line exceeds maximum allowed length.
+     ✗ [31m#48[39m: Line exceeds maximum allowed length.
+     ✗ [31m#55[39m: Line exceeds maximum allowed length.
+     ✗ [31m#56[39m: Line exceeds maximum allowed length.
+
+✗ [1m[31mLint![39m[22m » 5 errors and 0 warnings in 15 files
+

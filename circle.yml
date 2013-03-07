@@ -1,0 +1,5 @@
+deployment:
+  showcase:
+    branch: master
+    heroku:
+      appname: tablestakes-showcase

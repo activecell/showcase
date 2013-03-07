@@ -1,0 +1,26 @@
+!!! 5
+html
+  head
+    include includes/head
+    script(type='text/javascript', src='js/examples.js')
+    style
+      body {
+        overflow-y:scroll;
+      }
+  body
+    include includes/toppanel
+    .container
+      .row
+        .span3
+          .well
+            ul#coreLinkList.nav.nav-list
+              li.nav-header
+                | Core features
+        .span9
+          h3#example_header
+          #temp
+          #example(style='width:600px')
+          h3 Code for example
+          pre
+            code#example_js(data-language='javascript')
+    hr

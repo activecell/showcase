@@ -1,0 +1,38 @@
+#!/bin/bash
+#
+# bootstrap
+#
+# Checks for dependencies so you can get rolling with ActiveCell straight away
+
+echo ""
+echo "  tabestakes.js"
+echo "  A bad-ass interactive grid platform."
+echo ""
+
+#
+# Check for node
+#
+if test ! $(which node); then
+  echo "  x You need to install node. If you use Homebrew, you can run:"
+  echo "    brew install node"
+  exit
+else
+  echo "  + node found."
+fi
+
+#
+# Check for npm
+#
+if test ! $(which npm); then
+  echo "  x You need to install npm. If you use Homebrew, you can run:"
+  echo "    brew install npm"
+  exit
+else
+  echo "  + npm found."
+fi
+
+#
+# Install from package file
+#
+  echo "Installing from package.json."
+  npm install

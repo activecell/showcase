@@ -1,0 +1,2 @@
+describe 'integration', ->
+  require './base'

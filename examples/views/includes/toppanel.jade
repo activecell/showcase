@@ -1,0 +1,65 @@
+.navbar.navbar-inverse.navbar-fixed-top
+  .navbar-inner
+    .container
+      a.btn.btn-navbar(data-toggle='collapse', data-target='.nav-collapse')
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+      .dropdown
+        a.span2.dropdown-toggle.brand(href='#', data-toggle="dropdown" )
+          |  Tablestakes.js
+          i.icon-chevron-down.icon-white.pull-right
+        ul.dropdown-menu(role="menu", aria-labelledby="drop2", style="top: 40px;")
+          li
+            a(tabindex="-1", href='http://launchpad.activecell.com/admin') Activecell admin (rails)
+          li
+            a(tabindex="-1", href='#') Porchetta admin (node/socket)
+          li.divider
+          li
+            a(tabindex="-1", href='http://shotgun-showcase.herokuapp.com') Shotgun.js
+          li
+            a(tabindex="-1", href='http://shotgun-showcase.herokuapp.com') Shotgun.js
+          li
+            a(tabindex="-1", href='http://striker-showcase.herokuapp.com') Striker.js
+          li
+            a(tabindex="-1", href='http://tactile-showcase.herokuapp.com') Tactile.js
+          li.disabled
+            a(tabindex="-1", href='http://tablestakes-showcase.herokuapp.com') Tablestakes.js
+          li
+            a(tabindex="-1", href='#') Trebuchet
+      .nav-collapse
+        ul.nav
+          li(class="#{page == 'index'? 'active': ''}")
+            a(href='/')
+              i.icon-white.icon-home
+              |  Home
+          li(class="#{page == 'documentation'? 'active': ''}")
+            a(href='/documentation')
+              i.icon-white.icon-list-alt
+              |  Documentation
+          li(class="#{page == 'performance'? 'active': ''}")
+            a(href='/performance')
+              i.icon-white.icon-time
+              |  Performance
+          li(class="#{page == 'test'? 'active': ''}")
+            a(href='/test')
+              i.icon-white.icon-ok
+              |  Tests
+          li(class="#{page == 'report'? 'active': ''}")
+            a(href='/coverage')
+              i.icon-white.icon-ok
+              |  Coverage
+          li(class="#{page == 'styleguide'? 'active': ''}")
+            a(href='/styleguide')
+              i.icon-white.icon-glass
+              |  Style Guide
+          li
+            a(href='https://github.com/activecell/tablestakes')
+              i.icon-white.icon-book
+              |  Source
+      //
+        /.nav-collapse
+
+script(type='text/javascript')
+  $('.dropdown-toggle').dropdown()
+

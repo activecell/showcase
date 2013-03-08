@@ -1,15 +1,38 @@
-fs = require 'fs'
-child_process = require 'child_process'
-sass = require 'node-sass'
+module.exports = class Compiler
+  fs: require 'fs'
+  exec: require('child_process').exec
+  spawn: require('child_process').spawn
 
-coffeePath = "#{__dirname}/../node_modules/coffee-script/bin/coffee"
+  sass: require 'node-sass'
 
-module.exports.compile = (cb) ->
-  compileCoffeeSrc ->
-    compileCoffeeTests ->
-    compileCoffeeExamples ->
-      compileCss ->
-        cb() if cb
+  coffeePath: "#{__dirname}/../node_modules/coffee-script/bin/coffee"
+
+  constructor: (options) ->
+
+  compile: (cb) ->
+    compileCoffeeSrc ->
+      compileCoffeeTests ->
+      compileCoffeeExamples ->
+        compileCss ->
+          cb() if cb
+
+  compileCoffeeSrc: (cb) ->
+    srcDest = "#{__dirname}/../dist/#{glob.config.name}.js"
+    srcDir = "#{__dirname}/../src/coffee/"
+    command1 = "#{coffeePath} -j #{srcDest} -cb #{srcDir}"
+    command2 = "#{coffeePath} -p -cb #{srcDir}"
+    doccoPath = "#{__dirname}/../node_modules/docco/bin/docco"
+    docsDir = "#{__dirname}/../examples/public/docs/"
+
+    child_process.exec command1, (err,stdout,stderr) ->
+      if stderr
+        child_process.exec command2, (err,stdout,stderr) ->
+          console.log 'coffee err: ',stderr
+          cb()
+      else
+        child_process.exec "#{doccoPath} #{srcDir}*.coffee -o #{docsDir}"
+        cb()
+
 
 compileCss = (cb) ->
   switch glob.config.css
@@ -32,23 +55,6 @@ compileCoffeeTests = (cb) ->
         console.log 'coffee err: ',stderr
         cb()
     else
-      cb()
-
-compileCoffeeSrc = (cb) ->
-  srcDest = "#{__dirname}/../dist/#{glob.config.name}.js"
-  srcDir = "#{__dirname}/../src/coffee/"
-  command1 = "#{coffeePath} -j #{srcDest} -cb #{srcDir}"
-  command2 = "#{coffeePath} -p -cb #{srcDir}"
-  doccoPath = "#{__dirname}/../node_modules/docco/bin/docco"
-  docsDir = "#{__dirname}/../examples/public/docs/"
-
-  child_process.exec command1, (err,stdout,stderr) ->
-    if stderr
-      child_process.exec command2, (err,stdout,stderr) ->
-        console.log 'coffee err: ',stderr
-        cb()
-    else
-      child_process.exec "#{doccoPath} #{srcDir}*.coffee -o #{docsDir}"
       cb()
 
 compileCoffeeExamples = (cb) ->

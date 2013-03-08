@@ -45,7 +45,6 @@ else
   require './server'
   require './unit'
   require './integration'
-  require './lint'
 
 after (done)->
   if glob.report

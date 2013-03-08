@@ -1,3 +1,3 @@
 require('coffee-script')
-watcher = require('./watcher')
+watcher = require('./server/watcher')
 new watcher()

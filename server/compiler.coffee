@@ -8,13 +8,17 @@ module.exports.compile = (cb) ->
   compileCoffeeSrc ->
     compileCoffeeTests ->
     compileCoffeeExamples ->
-      switch glob.config.css
-        when 'less'
-          compileLess ->
-            cb()
-        when 'scss'
-          compileScss ->
-            cb()
+      compileCss ->
+        cb() if cb
+
+compileCss = (cb) ->
+  switch glob.config.css
+    when 'less'
+      compileLess ->
+        cb() if cb
+    when 'scss'
+      compileScss ->
+        cb() if cb
 
 compileCoffeeTests = (cb) ->
   testDest = "#{__dirname}/../examples/public/js/test.js"

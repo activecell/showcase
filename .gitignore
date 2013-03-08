@@ -7,13 +7,11 @@ node_modules/
 .DS_Store
 .sass-cache/
 .idea/
-examples/css/charts.css
-examples/js/tablestakes.js
 .rvmrc
 .powrc
 .log
 *.orig
 .tddium*
 .tddium
-test/cov/*
-test/docs/*
+temp/
+npm-debug.log

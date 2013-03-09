@@ -24,6 +24,7 @@
         "pygments":"",
         "zombie":"",
         "chai":"",
-        "jscoverage": ""
+        "jscoverage": "",
+        "async": ""
     }
 }

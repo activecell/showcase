@@ -2,7 +2,7 @@ config =
   name: 'showcase'
   secret: 'secretstring'
   port: process.env.PORT or 5000
-  css: 'scss'
+  css_engine: 'scss'
   path:
     temp: "#{__dirname}/../temp"
 

@@ -1,8 +1,17 @@
 module.exports = class Router
+
+  #modules
   fs: require 'fs'
+  coffeelint: require 'coffeelint'
+  kss: require 'kss'
+  jade: require 'jade'
+
+  config: require './config'
 
   constructor: (options) ->
     @[o] = options[o] for o of options
+    @dist_js = @fs.readFileSync "#{__dirname}/../dist/#{name}.js"
+    @dist_css = @fs.readFileSync "#{__dirname}/../dist/#{name}.css"
 
   bindRoutes: (app)->
     app.get '/', @root
@@ -12,15 +21,15 @@ module.exports = class Router
     app.get '/coverage', @coverage
     app.get '/styleguide', @styleguide
     app.get '/performance', @perfomance
-    app.get "/js/#{name}.js", @dist_js
-    app.get "/css/#{name}.css", @dist_css
+    app.get "/js/#{name}.js", @get_dist_js
+    app.get "/css/#{name}.css", @get_dist_css
 
   root: (req,res)=>
     res.render 'index'
       page: 'index'
 
   pid: (req,res)=>
-    if req.query.secret is glob.config.secret
+    if req.query.secret is @config.secret
       res.send
         pid: process.pid
     else
@@ -48,20 +57,20 @@ module.exports = class Router
     files = @fs.readdirSync path
     for f in files
       contents = @fs.readFileSync path + f, 'utf-8'
-      errors[f] = @modules.coffeelint.lint contents
+      errors[f] = @coffeelint.lint contents
 
     path2="#{__dirname}/../examples/public/coffee/"
     files2 = @fs.readdirSync path2
     for t in files2
       contents = @fs.readFileSync path2 + t, 'utf-8'
-      errors[t] = @modules.coffeelint.lint contents
+      errors[t] = @coffeelint.lint contents
 
     path3="#{__dirname}/../server/"
     files3 = @fs.readdirSync path3
     for d in files3
       if d.substr(-7) is ".coffee"
         contents = @fs.readFileSync path3 + d, 'utf-8'
-        errors[d] = @modules.coffeelint.lint contents
+        errors[d] = @coffeelint.lint contents
 
     try
       lint = @fs.readFileSync __dirname+'/../test/reports/lint.txt'
@@ -97,24 +106,45 @@ module.exports = class Router
   styleguide: (req,res)=>
     options =
       markdown: false
-    modules.kss.traverse "#{__dirname}/../src/", options, (err, styleguide)->
-      glob.getSections styleguide.section(), (sections)->
+    @kss.traverse "#{__dirname}/../src/", options, (err, styleguide)=>
+      @getSections styleguide.section(), (sections)=>
         res.render 'styleguide'
           sections: sections
           page: 'styleguide'
+
+  getSections: (sections, cb) ->
+    jadeDir = "#{__dirname}/../examples/views/sections/"
+    for section in sections
+      section.data.filename = 'tables.scss'
+      section.data.description = section.data.description.replace(/\n/g, "<br />")
+      jade = null
+      try
+        jadePath = "#{jadeDir}#{section.reference()}.jade"
+        jade = @fs.readFileSync jadePath
+      if jade
+        locals =
+          section: section
+          className: '$modifier'
+        html = @jade.compile(jade, {pretty: true})(locals)
+        section.data.example = html
+        for modifier in section.modifiers()
+          a = {className: modifier.className()}
+          modifier.data.example = @jade.compile(
+            jade,
+            {pretty: true}
+          )(a)
+    cb sections if cb
 
   performance: (req,res)=>
     res.render 'performance'
       page: 'performance'
 
-  dist_js: (req,res)=>
-    script = @fs.readFileSync "#{__dirname}/../dist/#{name}.js"
+  get_dist_js: (req,res)=>
     res.setHeader 'Content-Type', 'text/javascript'
     res.setHeader 'Content-Length', script.length
-    res.end script
+    res.end @dist_js
 
-  dist_css: (req,res)=>
-    style = @fs.readFileSync "#{__dirname}/../dist/#{name}.css"
+  get_dist_css: (req,res)=>
     res.setHeader 'Content-Type', 'text/css'
     res.setHeader 'Content-Length', style.length
-    res.end style
+    res.end @dist_css

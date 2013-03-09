@@ -1,3 +1,5 @@
+#TODO get environment from live server
+
 process.env.NODE_ENV = 'testing'
 
 global.assert = require 'assert'

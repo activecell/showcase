@@ -7,19 +7,20 @@ module.exports = class Lint
   command: 'coffeelint'
   args: [
     '-f',
-    "#{__dirname}/../coffeelint.json",
+    "#{glob.root}/coffeelint.json",
     '-r',
-    './examples'
-    './server'
-    './src'
-    './test'
+    '#{glob.root}/examples'
+    '#{glob.root}/server'
+    '#{glob.root}/src'
+    '#{glob.root}/test'
   ]
   options:
     stdio: "inherit"
 
   constructor: (options)->
     @options = options or {}
-    @path = "#{@config}/lint.txt"
+    #FIXME
+    @path = "#{glob.config}/lint.txt"
 
   removeAllListeners: ->
       @process.removeAllListeners 'exit'
@@ -56,7 +57,7 @@ module.exports = class Lint
         @report = null
         cb() if cb
 
-  run: (cb)->
+  compile: (cb)->
     @generate =>
       cb() if cb
     @

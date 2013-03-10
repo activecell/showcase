@@ -5,24 +5,33 @@ module.exports = class Router
   coffeelint: require 'coffeelint'
   kss: require 'kss'
   jade: require 'jade'
+  #parallel: require('async').parallel
 
-  config: require './config'
+  path:
+    dist:
+      js: "#{glob.root}/dist/#{glob.config.name}.js"
+      css: "#{glob.root}/dist/#{glob.config.name}.css"
 
-  constructor: (options) ->
-    @[o] = options[o] for o of options
-    @dist_js = @fs.readFileSync "#{__dirname}/../dist/#{name}.js"
-    @dist_css = @fs.readFileSync "#{__dirname}/../dist/#{name}.css"
+  dist:
+    js: ''
+    css: ''
 
-  bindRoutes: (app)->
+  init: (app,cb)->
     app.get '/', @root
     app.get '/pid', @pid
     app.get '/documentation', @documentation
     app.get '/test', @test
     app.get '/coverage', @coverage
     app.get '/styleguide', @styleguide
-    app.get '/performance', @perfomance
-    app.get "/js/#{name}.js", @get_dist_js
-    app.get "/css/#{name}.css", @get_dist_css
+    app.get '/performance', @performance
+    app.get "/js/#{glob.config.name}.js", @get_dist_js
+    app.get "/css/#{glob.config.name}.css", @get_dist_css
+    @fs.readFile @path.dist.js, (err,js)=>
+      @dist.js = js.toString()
+      cb() if @dist.css and cb
+    @fs.readFile @path.dist.css, (err,css)=>
+      @dist.css = css.toString()
+      cb() if @dist.js and cb
 
   root: (req,res)=>
     res.render 'index'
@@ -116,7 +125,8 @@ module.exports = class Router
     jadeDir = "#{__dirname}/../examples/views/sections/"
     for section in sections
       section.data.filename = 'tables.scss'
-      section.data.description = section.data.description.replace(/\n/g, "<br />")
+      section.data.description = section.data.description
+        .replace(/\n/g, "<br />")
       jade = null
       try
         jadePath = "#{jadeDir}#{section.reference()}.jade"
@@ -141,10 +151,10 @@ module.exports = class Router
 
   get_dist_js: (req,res)=>
     res.setHeader 'Content-Type', 'text/javascript'
-    res.setHeader 'Content-Length', script.length
-    res.end @dist_js
+    res.setHeader 'Content-Length', @dist.js.length
+    res.end @dist.js
 
   get_dist_css: (req,res)=>
     res.setHeader 'Content-Type', 'text/css'
-    res.setHeader 'Content-Length', style.length
-    res.end @dist_css
+    res.setHeader 'Content-Length', @dist.css.length
+    res.end @dist.css

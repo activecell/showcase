@@ -1,1 +1,2 @@
-console.log 'src'
+example_function = () ->
+  console.log 'example function'

@@ -1,31 +1,32 @@
 module.exports = class Lint
-  config: require './config'
 
   process: null
   report: null
 
+  fs: require 'fs'
+  spawn: require('child_process').spawn
+
+  path: "#{glob.root}/temp/lint.txt"
   command: 'coffeelint'
   args: [
     '-f',
     "#{glob.root}/coffeelint.json",
     '-r',
-    '#{glob.root}/examples'
-    '#{glob.root}/server'
-    '#{glob.root}/src'
-    '#{glob.root}/test'
+    "#{glob.root}/examples"
+    "#{glob.root}/server"
+    "#{glob.root}/src"
+    "#{glob.root}/test"
   ]
   options:
     stdio: "inherit"
 
   constructor: (options)->
     @options = options or {}
-    #FIXME
-    @path = "#{glob.config}/lint.txt"
 
   removeAllListeners: ->
-      @process.removeAllListeners 'exit'
-      @process.stdout.removeAllListeners 'data'
-      @process.stderr.removeAllListeners 'data'
+    @process.removeAllListeners 'exit'
+    @process.stdout.removeAllListeners 'data'
+    @process.stderr.removeAllListeners 'data'
 
   stop: (cb)->
     if @process
@@ -40,7 +41,7 @@ module.exports = class Lint
 
   generate: (cb)->
     @report = ''
-    @process = @spawn command,args,options
+    @process = @spawn @command,@args,@options
     @process.stdout.on 'data', (data) =>
       data = data.toString()
       @report += data
@@ -57,7 +58,7 @@ module.exports = class Lint
         @report = null
         cb() if cb
 
-  compile: (cb)->
+  compile: (cb)=>
     @generate =>
       cb() if cb
     @

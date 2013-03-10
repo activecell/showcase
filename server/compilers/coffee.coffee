@@ -15,6 +15,11 @@ module.exports = class Coffee
       from: "#{glob.root}/examples/public/coffee/"
       to: "#{glob.root}/examples/public/js/"
 
+  cmd:
+    src:
+      join: null
+      error: null
+
   constructor: ->
 
     @cmd =
@@ -28,30 +33,29 @@ module.exports = class Coffee
         compile: "#{@coffee} -o #{@path.examples.to} -cb #{@path.examples.from}"
         error: "#{@coffee} -p -cb #{@path.examples.from}"
 
-  compile:
-    src: (cb) ->
-      @exec @cmd.src.join, (err,stdout,stderr) =>
-        if stderr
-          @exec @cmd.src.error, (err,stdout,stderr) =>
-            console.log 'coffee err: ',stderr
-            cb() if cb
-        else
+  compile_src: (cb) =>
+    @exec @cmd.src.join, (err,stdout,stderr) =>
+      if stderr
+        @exec @cmd.src.error, (err,stdout,stderr) =>
+          console.log 'coffee err: ',stderr
           cb() if cb
+      else
+        cb() if cb
 
-    tests: (cb) ->
-      @exec @cmd.test.join, (err,stdout,stderr) ->
-        if stderr
-          @exec @cmd.test.error, (err,stdout,stderr) ->
-            console.log 'coffee err: ',stderr
-            cb()
-        else
+  compile_tests: (cb) =>
+    @exec @cmd.test.join, (err,stdout,stderr) ->
+      if stderr
+        @exec @cmd.test.error, (err,stdout,stderr) ->
+          console.log 'coffee err: ',stderr
           cb()
+      else
+        cb()
 
-    examples: (cb) ->
-      @exec @cmd.examples.compile, (err,stdout,stderr) ->
-        if stderr
-          @exec @cmd.examples.error, (err,stdout,stderr) ->
-            console.log 'coffee err: ',stderr
-            cb()
-        else
+  compile_examples: (cb) =>
+    @exec @cmd.examples.compile, (err,stdout,stderr) ->
+      if stderr
+        @exec @cmd.examples.error, (err,stdout,stderr) ->
+          console.log 'coffee err: ',stderr
           cb()
+      else
+        cb()

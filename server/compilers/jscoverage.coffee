@@ -3,6 +3,7 @@ module.exports = class JSCoverage
   fs: require 'fs'
   spawn: require('child_process').spawn
   exec: require('child_process').exec
+  parallel: require('async').parallel
 
   jscov: "#{glob.root}/node_modules/jscoverage/bin/jscoverage"
   mocha: "#{glob.root}/node_modules/mocha/bin/mocha"
@@ -16,10 +17,17 @@ module.exports = class JSCoverage
       unit: "#{root}/temp/coverage/unit.html"
       integration: "#{root}/temp/coverage/integration.html"
 
-  exec: require('child_process').exec
-  spawn: require('child_process').spawn
+  globals: "_,
+    d3,
+    browser, window,
+    _$jscoverage,_$jscoverage_cond,_$jscoverage_done,_$jscoverage_init
+  "
 
-  constructor: (options) ->
+  process:
+    unit: null
+    integration: null
+
+  constructor: ->
     try
       @fs.mkdirSync "#{glob.config.path.temp}/reports"
       @fs.mkdirSync "#{glob.config.path.temp}/cov"
@@ -31,48 +39,62 @@ module.exports = class JSCoverage
       html_cov:
         unit:
           args: [
-            "#{__dirname}/../test.js",
+            "#{__dirname}/../test_runners/cover_unit",
             "-R", "html-cov",
             "--timeout", "6000",
             "--globals", @globals
           ]
         integration:
           args: [
-            "#{__dirname}/../test.js",
+            "#{__dirname}/../test_runners/cover_integration",
             "-R", "html-cov",
             "--timeout", "6000",
             "--globals", @globals
           ]
 
-  compile:
-    unit: (cb) ->
-      @exec @cmd.jscov.unit, (err, stdout, stderr) =>
-        cb()  if cb
-    integration: (cb) ->
-      @exec @cmd.jscov.integration, (err, stdout, stderr) =>
-        cb()  if cb
+  compile_unit: (cb) =>
+    @exec @cmd.jscov.unit, (err, stdout, stderr) =>
+      cb()  if cb
 
-  report:
-    unit: (cb)->
-      html = ""
-      @process.coverage_report = @spawn @bin.mocha, @cmd.report.src.jscoverage.unit.args, @cmd.report.src.jscoverage.unit.options
-      @process.coverage_report.stderr.on "data", (data) =>
-        console.log data.toString()
-      #TODO writable stream
-      @process.coverage_report.stdout.on "data", (data) =>
-        html += data.toString()
-      @process.coverage_report.on "exit", (err, stdout, stderr) =>
-        @fs.writeFile @path.report.src.jscoverage.unit, html
-        cb()  if cb
+  compile_integration: (cb) =>
+    @exec @cmd.jscov.integration, (err, stdout, stderr) =>
+      cb()  if cb
 
-    integration: (cb)->
-      html = ""
-      @process.coverage_report = @spawn @bin.mocha, @cmd.report.src.jscoverage.unit.args, @cmd.report.src.jscoverage.unit.options
-      @process.coverage_report.stderr.on "data", (data) =>
-        console.log data.toString()
-      #TODO writable stream
-      @process.coverage_report.stdout.on "data", (data) =>
-        html += data.toString()
-      @process.coverage_report.on "exit", (err, stdout, stderr) =>
-        @fs.writeFile @path.report.src.jscoverage.unit, html
-        cb()  if cb
+  report_unit: (cb) =>
+    html = ""
+    @process.report_unit = @spawn(
+      @mocha,
+      @cmd.html_cov.unit.args,
+      @cmd.html_cov.unit.options
+    )
+    @process.report_unit.stderr.on "data", (data) =>
+      console.log data.toString()
+    #TODO writable stream
+    @process.report_unit.stdout.on "data", (data) =>
+      html += data.toString()
+    @process.report_unit.on "exit", (err, stdout, stderr) =>
+      @fs.writeFile @path.html_cov.unit, html
+      cb()  if cb
+
+  report_integration: (cb) =>
+    html = ""
+    @process.report_integration = @spawn(
+      @mocha,
+      @cmd.html_cov.integration.args,
+      @cmd.html_cov.integration.options
+    )
+    @process.report_integration.stderr.on "data", (data) =>
+      console.log data.toString()
+    #TODO writable stream
+    @process.report_integration.stdout.on "data", (data) =>
+      html += data.toString()
+    @process.report_integration.on "exit", (err, stdout, stderr) =>
+      @fs.writeFile @path.html_cov.integration, html
+      cb()  if cb
+
+  run: (cb) ->
+    #console.log 'exec'
+    @parallel [@compile_unit,@compile_integration], =>
+      @parallel [@report_unit,@report_integration], =>
+        cb() if cb
+

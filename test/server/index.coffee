@@ -1,22 +1,27 @@
-describe 'server', ->
+module.exports = (env)->
+  assert = require 'assert'
+  request = require 'request'
+  config = require '../../server/config'
+  server_url = "http://localhost:#{config.port}"
 
-  it "test #{glob.url}", (done) ->
-    glob.request.get glob.url, (err,res,body) ->
-      assert body
-      done()
+  describe 'server', ->
 
-  it "test #{glob.url}documentation", (done) ->
-    glob.request.get glob.url+"documentation", (err,res,body) ->
-      assert body
-      done()
+    it "test #{server_url}", (done) ->
+      request.get server_url, (err,res,body) ->
+        assert body
+        done()
 
-  it "test #{glob.url}test", (done)->
-    glob.request.get glob.url+"test", (err,res,body) ->
-      assert body
-      done()
+    it "test #{server_url}/documentation", (done) ->
+      request.get "#{server_url}/documentation", (err,res,body) ->
+        assert body
+        done()
 
-  it "test #{glob.url}styleguide", (done) ->
-    glob.request.get glob.url+"styleguide", (err,res,body) ->
-      assert body
-      done()
+    it "test #{server_url}/test", (done)->
+      request.get "#{server_url}/test", (err,res,body) ->
+        assert body
+        done()
 
+    it "test #{server_url}/styleguide", (done) ->
+      request.get "#{server_url}/styleguide", (err,res,body) ->
+        assert body
+        done()

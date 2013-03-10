@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "test": "node test.js",
-        "start": "node start.js"
+        "start": "node watch.js"
     },
     "engines": {
         "node": "0.8.14",

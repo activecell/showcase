@@ -3,11 +3,12 @@ module.exports = class Build
   fs: require 'fs'
 
   #compilers
-  css: require './compilers/css'
-  docco: require './compilers/docco'
-  jscoverage: require './compilers/jscoverage'
-  coffee: require './compilers/coffee'
-  lint: require './compilers/lint'
+  coffee: new (require './compilers/coffee')
+  css: new (require './compilers/css')
+  docco: new (require './compilers/docco')
+  jscoverage: new (require './compilers/jscoverage')
+  lint: new (require './compilers/lint')
+  test: new (require './compilers/test')
 
   #modules
   parallel: require('async').parallel
@@ -15,29 +16,38 @@ module.exports = class Build
   constructor: (options) ->
     try
       @fs.mkdirSync glob.config.path.temp
-
-    @build =
-      step1: [
-        @coffee.compile.src
-        @coffee.compile.examples
-        @coffee.compile.tests
+    @functions =
+      compilers: [
+        @coffee.compile_src
+        @coffee.compile_examples
+        @coffee.compile_tests
         @lint.compile
-        @css.compile
-      ]
-      step2: [
+        @css.compile_src
         @docco.compile
-        @jscoverage.compile.unit
-        @jscoverage.compile.integration
       ]
-      step3: [
-        @jscoverage.report.unit
-        @jscoverage.report.integration
+      report: [
+        @jscover
+        @test_reports
       ]
 
-  start: (cb1,cb2,cb3) ->
-    @parallel @build.step1, =>
-      cb1() if cb1
-      @parallel @build.step2, =>
-        cb2() if cb2
-        @parallel @build.step3, =>
-          cb3() if cb3
+
+  compile: (cb)->
+    console.log 'here'
+    @parallel @functions.compilers, =>
+      cb() if cb
+
+  spec: (cb)->
+    console.log 'build test'
+    @test.spec =>
+      cb() if cb
+
+  test_reports: (cb)=>
+    cb() if cb
+
+  jscover: (cb)=>
+    @jscoverage.run =>
+      cb() if cb
+
+  report: (cb)->
+    @parallel @functions.report, =>
+      cb() if cb

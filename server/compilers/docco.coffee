@@ -11,6 +11,6 @@ module.exports = class Docco
   constructor: (options) ->
     @cmd = "#{@docco} #{@path.from} -o #{@path.to}"
 
-  compile: (cb)->
+  compile: (cb)=>
     @exec @cmd, =>
       cb() if cb

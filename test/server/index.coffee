@@ -16,8 +16,18 @@ module.exports = (env)->
         assert body
         done()
 
+    it "test #{server_url}/performance", (done) ->
+      request.get "#{server_url}/performance", (err,res,body) ->
+        assert body
+        done()
+
     it "test #{server_url}/test", (done)->
       request.get "#{server_url}/test", (err,res,body) ->
+        assert body
+        done()
+
+    it "test #{server_url}/coverage", (done) ->
+      request.get "#{server_url}/styleguide", (err,res,body) ->
         assert body
         done()
 

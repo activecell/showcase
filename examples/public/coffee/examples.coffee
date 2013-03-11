@@ -1,42 +1,6 @@
 core = [
   shortLink: "base"
   title: "Base example"
-,
-  shortLink: "custom_classes"
-  title: "Custom classes"
-,
-  shortLink: "editable"
-  title: "Editable"
-,
-  shortLink: "nested"
-  title: "Nested"
-,
-  shortLink: "nested_editable"
-  title: "Nested and editable"
-,
-  shortLink: "filterable"
-  title: "Filterable"
-,
-  shortLink: "deleteable"
-  title: "Deleteable"
-,
-  shortLink: "resizable",
-  title: "Resizable"
-,
-  shortLink: "hierarchy_dragging"
-  title: "Hierarchy dragging"
-,
-  shortLink: "reorder_dragging"
-  title: "Reorder dragging"
-,
-  shortLink: "editors"
-  title: "Custom editors"
-,
-  shortLink: "timeseries"
-  title: "Timeseries"
-,
-  shortLink: "all"
-  title: "Full stack"
 ]
 
 showcaseObject = routes: {}

@@ -5,17 +5,10 @@ module.exports = class JSCoverage
   exec: require('child_process').exec
   parallel: require('async').parallel
 
-  jscov: "#{glob.root}/node_modules/jscoverage/bin/jscoverage"
-  mocha: "#{glob.root}/node_modules/mocha/bin/mocha"
+  jscov: glob.config.bin.jscov
+  mocha: glob.config.bin.mocha
 
-  path:
-    src: "#{glob.root}/dist/#{glob.config.name}.js"
-    jscov:
-      unit: "#{glob.root}/temp/cov/unit_#{glob.config.name}.js"
-      integration: "#{glob.root}/temp/cov/integration_#{glob.config.name}.js"
-    html_cov:
-      unit: "#{glob.config.path.coverage_reports}/unit.html"
-      integration: "#{glob.config.path.coverage_reports}/integration.html"
+  path: glob.config.path.jscoverage
 
   globals: "_,
     d3,
@@ -29,8 +22,8 @@ module.exports = class JSCoverage
 
   constructor: ->
     try
-      @fs.mkdirSync glob.config.path.coverage_reports
-      @fs.mkdirSync "#{glob.config.path.temp}/cov"
+      @fs.mkdirSync @path.coverage_reports
+      @fs.mkdirSync @path.cov
 
     @cmd =
       jscov:
@@ -53,47 +46,50 @@ module.exports = class JSCoverage
           ]
 
   compile_unit: (cb) =>
-    @exec @cmd.jscov.unit, (err, stdout, stderr) =>
-      cb()  if cb
+    @fs.unlink @path.jscov.unit, =>
+      @exec @cmd.jscov.unit, (err, stdout, stderr) =>
+        cb()  if cb
 
   compile_integration: (cb) =>
-    @exec @cmd.jscov.integration, (err, stdout, stderr) =>
-      cb()  if cb
+    @fs.unlink @path.jscov.integration, =>
+      @exec @cmd.jscov.integration, (err, stdout, stderr) =>
+        cb()  if cb
 
   report_unit: (cb) =>
-    html = ""
-    @process.report_unit = @spawn(
-      @mocha,
-      @cmd.html_cov.unit.args,
-      @cmd.html_cov.unit.options
-    )
-    @process.report_unit.stderr.on "data", (data) =>
-      console.log data.toString()
-    #TODO writable stream
-    @process.report_unit.stdout.on "data", (data) =>
-      html += data.toString()
-    @process.report_unit.on "exit", (err, stdout, stderr) =>
-      @fs.writeFile @path.html_cov.unit, html, =>
-        cb() if cb
+    @fs.unlink @path.html_cov.unit, =>
+      html = ""
+      @process.report_unit = @spawn(
+        @mocha,
+        @cmd.html_cov.unit.args,
+        @cmd.html_cov.unit.options
+      )
+      @process.report_unit.stderr.on "data", (data) =>
+        console.log data.toString()
+      #TODO writable stream
+      @process.report_unit.stdout.on "data", (data) =>
+        html += data.toString()
+      @process.report_unit.on "exit", (err, stdout, stderr) =>
+        @fs.writeFile @path.html_cov.unit, html, =>
+          cb() if cb
 
   report_integration: (cb) =>
-    html = ""
-    @process.report_integration = @spawn(
-      @mocha,
-      @cmd.html_cov.integration.args,
-      @cmd.html_cov.integration.options
-    )
-    @process.report_integration.stderr.on "data", (data) =>
-      console.log data.toString()
-    #TODO writable stream
-    @process.report_integration.stdout.on "data", (data) =>
-      html += data.toString()
-    @process.report_integration.on "exit", (err, stdout, stderr) =>
-      @fs.writeFile @path.html_cov.integration, html, =>
-        cb() if cb
+    @fs.unlink @path.html_cov.integration, =>
+      html = ""
+      @process.report_integration = @spawn(
+        @mocha,
+        @cmd.html_cov.integration.args,
+        @cmd.html_cov.integration.options
+      )
+      @process.report_integration.stderr.on "data", (data) =>
+        console.log data.toString()
+      #TODO writable stream
+      @process.report_integration.stdout.on "data", (data) =>
+        html += data.toString()
+      @process.report_integration.on "exit", (err, stdout, stderr) =>
+        @fs.writeFile @path.html_cov.integration, html, =>
+          cb() if cb
 
   run: (cb) ->
-    #console.log 'exec'
     @parallel [@compile_unit,@compile_integration], =>
       @parallel [@report_unit,@report_integration], =>
         cb() if cb

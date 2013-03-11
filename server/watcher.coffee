@@ -1,17 +1,9 @@
 module.exports = class Watcher
 
+  config: require './config'
+
   process: null
 
-  dirs: [
-    'server'
-    'src'
-    'test'
-    'examples/public/coffee'
-    'examples/views'
-  ]
-  files: [
-    'start.js'
-  ]
   result: []
 
   #modules
@@ -21,10 +13,11 @@ module.exports = class Watcher
   parallel: require('async').parallel
 
   lastStart: 0
-  delayStart: 50
+  timeout: 50
 
   constructor: (options)->
-
+    @dirs = @config.watch.dirs
+    @files = @config.watch.files
     #fix path
     for dir,d in @dirs
       @dirs[d] = "#{__dirname}/../#{dir}"
@@ -66,13 +59,19 @@ module.exports = class Watcher
 
   watch: (file)->
     @fs.watch file,(event,filename)=>
-      if Date.now() - @lastStart > @delayStart
+      if Date.now() - @lastStart > @timeout
         @lastStart = Date.now()
         @kill =>
           @start()
 
+  destroy: (cb)->
+    for file in @result
+      @fs.unwatchFile file
+    @kill =>
+      cb() if cb
+
   kill: (cb)->
-    if @process
+    if @process and @process.exitCode is null
       @process.removeAllListeners 'exit'
       @process.on 'exit', =>
         @process.removeAllListeners 'exit'
@@ -80,8 +79,11 @@ module.exports = class Watcher
         cb() if cb
       @process.kill()
     else
+      @process = null
       cb() if cb
 
   start: ->
+    @lastStart = Date.now()
     @process = @spawn 'node', ["#{__dirname}/../start.js"],
       stdio: 'inherit'
+      stderr: 'inherit'

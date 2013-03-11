@@ -94,7 +94,7 @@ module.exports = class Router
 
   coverage: (req,res)=>
     cover = {}
-    coverPath = "#{glob.config.path.coverage_reports}/unit.html"
+    coverPath = "#{glob.config.path.jscoverage.coverage_reports}/unit.html"
     htmlBody = @fs.readFileSync coverPath, 'utf-8'
     start = htmlBody.indexOf("<body>")+6
     end = htmlBody.indexOf("</body></html>")

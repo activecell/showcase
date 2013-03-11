@@ -1,7 +1,7 @@
 module.exports = class Docco
 
   exec: require('child_process').exec
-  docco: "#{glob.root}/node_modules/docco/bin/docco"
+  docco: glob.config.bin.docco
 
   path:
     #TODO subfolders
@@ -12,5 +12,6 @@ module.exports = class Docco
     @cmd = "#{@docco} #{@path.from} -o #{@path.to}"
 
   compile: (cb)=>
-    @exec @cmd, =>
+    @exec @cmd, (err)=>
+      console.log err if err
       cb() if cb

@@ -3,39 +3,65 @@ module.exports = class Watcher
   process: null
 
   dirs: [
-    'server/'
-    'src/'
-    'test/'
+    'server'
+    'src'
+    'test'
+    'examples/public/coffee'
   ]
   files: [
     'start.js'
   ]
+  result: []
 
   #modules
   fs: require 'fs'
 
   spawn: require("child_process").spawn
+  parallel: require('async').parallel
 
   lastStart: 0
-  delayStart: 20
+  delayStart: 50
 
   constructor: (options)->
-    @getFiles (files)=>
-      for file in files
+
+    #fix path
+    for dir,d in @dirs
+      @dirs[d] = "#{__dirname}/../#{dir}"
+
+    for file in @files
+      @result.push "#{__dirname}/../#{file}"
+
+    async = []
+    for dir in @dirs
+      ((dir)=>
+        async.push (done)=>
+          @getFiles dir,done
+      )(dir)
+    @parallel async, =>
+      for file in @result
         @watch file
       @start()
 
-  getFiles: (cb)->
-    files = []
-    for dir in @dirs
-      ((dir)=>
-        dir_files = @fs.readdirSync "#{__dirname}/../#{dir}"
-        #for dir_file in dir_files
-        console.log dir_files
-      )(dir)
-    for file in @files
-      files.push "#{__dirname}/../#{file}"
-    cb(files) if cb
+  getFiles: (dir,done)->
+    @watch dir
+    @fs.readdir dir, (err,files)=>
+      dirs = []
+      for file in files
+        if file.split('.')[1]
+          @result.push dir+'/'+file
+        else
+          dirs.push dir+'/'+file
+      if dirs[0]
+        async = []
+        for dir in dirs
+          ((dir)=>
+            async.push (_done)=>
+              @getFiles dir,_done
+          )(dir)
+        @parallel async, =>
+          done()
+      else
+        done()
 
   watch: (file)->
     @fs.watch file,(event,filename)=>
@@ -46,6 +72,7 @@ module.exports = class Watcher
 
   kill: (cb)->
     if @process
+      @process.removeAllListeners 'exit'
       @process.on 'exit', =>
         @process.removeAllListeners 'exit'
         @process = null
@@ -55,4 +82,5 @@ module.exports = class Watcher
       cb() if cb
 
   start: ->
-    @process = @spawn 'node', ["#{__dirname}/../start.js"]
+    @process = @spawn 'node', ["#{__dirname}/../start.js"],
+      stdio: 'inherit'

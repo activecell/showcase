@@ -32,12 +32,10 @@ module.exports = class Build
 
 
   compile: (cb)->
-    console.log 'here'
     @parallel @functions.compilers, =>
       cb() if cb
 
   spec: (cb)->
-    console.log 'build test'
     @test.spec =>
       cb() if cb
 

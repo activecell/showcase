@@ -14,8 +14,8 @@ module.exports = class JSCoverage
       unit: "#{glob.root}/temp/cov/unit_#{glob.config.name}.js"
       integration: "#{glob.root}/temp/cov/integration_#{glob.config.name}.js"
     html_cov:
-      unit: "#{root}/temp/coverage/unit.html"
-      integration: "#{root}/temp/coverage/integration.html"
+      unit: "#{glob.config.path.coverage_reports}/unit.html"
+      integration: "#{glob.config.path.coverage_reports}/integration.html"
 
   globals: "_,
     d3,
@@ -29,7 +29,7 @@ module.exports = class JSCoverage
 
   constructor: ->
     try
-      @fs.mkdirSync "#{glob.config.path.temp}/reports"
+      @fs.mkdirSync glob.config.path.coverage_reports
       @fs.mkdirSync "#{glob.config.path.temp}/cov"
 
     @cmd =
@@ -73,8 +73,8 @@ module.exports = class JSCoverage
     @process.report_unit.stdout.on "data", (data) =>
       html += data.toString()
     @process.report_unit.on "exit", (err, stdout, stderr) =>
-      @fs.writeFile @path.html_cov.unit, html
-      cb()  if cb
+      @fs.writeFile @path.html_cov.unit, html, =>
+        cb() if cb
 
   report_integration: (cb) =>
     html = ""
@@ -89,8 +89,8 @@ module.exports = class JSCoverage
     @process.report_integration.stdout.on "data", (data) =>
       html += data.toString()
     @process.report_integration.on "exit", (err, stdout, stderr) =>
-      @fs.writeFile @path.html_cov.integration, html
-      cb()  if cb
+      @fs.writeFile @path.html_cov.integration, html, =>
+        cb() if cb
 
   run: (cb) ->
     #console.log 'exec'

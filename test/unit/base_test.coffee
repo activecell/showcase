@@ -1,5 +1,5 @@
 describe "base", ->
 
-  it 'window', (done) ->
-    assert window
+  it 'example_function ok', (done) ->
+    assert window.example_function() is 'ok'
     done()

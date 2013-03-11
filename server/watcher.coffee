@@ -7,6 +7,7 @@ module.exports = class Watcher
     'src'
     'test'
     'examples/public/coffee'
+    'examples/views'
   ]
   files: [
     'start.js'

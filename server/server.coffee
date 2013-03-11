@@ -41,10 +41,7 @@ module.exports = class Server
 
   start: (cb)->
     @build.compile =>
-      console.log 'compiled'
       @listen =>
-        console.log 'listened'
         @build.report =>
           @build.spec =>
-            console.log 'build done'
             cb() if cb

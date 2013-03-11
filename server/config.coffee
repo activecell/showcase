@@ -5,6 +5,7 @@ config =
   css_engine: 'scss'
   path:
     temp: "#{__dirname}/../temp"
+    coverage_reports: "#{__dirname}/../temp/coverage_reports"
 
 if process.env.NODE_ENV is 'testing'
   config.port = 5001

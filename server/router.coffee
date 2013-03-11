@@ -36,6 +36,7 @@ module.exports = class Router
   root: (req,res)=>
     res.render 'index'
       page: 'index'
+      app_name: glob.config.name
 
   pid: (req,res)=>
     if req.query.secret is @config.secret
@@ -57,6 +58,7 @@ module.exports = class Router
     res.render 'documentation'
       docs: docs
       page: 'documentation'
+      app_name: glob.config.name
 
   test: (req,res)=>
     errors = {}
@@ -88,10 +90,11 @@ module.exports = class Router
       errors: errors
       page: 'mocha'
       lint: lint
+      app_name: glob.config.name
 
   coverage: (req,res)=>
     cover = {}
-    coverPath = "#{__dirname}/../test/reports/coverage.html"
+    coverPath = "#{glob.config.path.coverage_reports}/unit.html"
     htmlBody = @fs.readFileSync coverPath, 'utf-8'
     start = htmlBody.indexOf("<body>")+6
     end = htmlBody.indexOf("</body></html>")
@@ -103,6 +106,7 @@ module.exports = class Router
     res.render 'coverage'
       cover: cover
       page: 'coverage'
+      app_name: glob.config.name
 
     #report = ''
     #try
@@ -120,6 +124,7 @@ module.exports = class Router
         res.render 'styleguide'
           sections: sections
           page: 'styleguide'
+          app_name: glob.config.name
 
   getSections: (sections, cb) ->
     jadeDir = "#{__dirname}/../examples/views/sections/"
@@ -148,6 +153,7 @@ module.exports = class Router
   performance: (req,res)=>
     res.render 'performance'
       page: 'performance'
+      app_name: glob.config.name
 
   get_dist_js: (req,res)=>
     res.setHeader 'Content-Type', 'text/javascript'

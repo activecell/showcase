@@ -7,26 +7,26 @@
         span.icon-bar
       .dropdown
         a.span2.dropdown-toggle.brand(href='#', data-toggle="dropdown" )
-          |  Tablestakes.js
+          |  #{app_name}
           i.icon-chevron-down.icon-white.pull-right
         ul.dropdown-menu(role="menu", aria-labelledby="drop2", style="top: 40px;")
           li
             a(tabindex="-1", href='http://launchpad.activecell.com/admin') Activecell admin (rails)
-          li
+          li(class="#{app_name == 'porchetta'? 'disabled': ''}")
             a(tabindex="-1", href='#') Porchetta admin (node/socket)
           li.divider
           li
             a(tabindex="-1", href='http://shotgun-showcase.herokuapp.com') Shotgun.js
-          li
-            a(tabindex="-1", href='http://shotgun-showcase.herokuapp.com') Shotgun.js
-          li
+          li(class="#{app_name == 'shotgun'? 'disabled': ''}")
             a(tabindex="-1", href='http://striker-showcase.herokuapp.com') Striker.js
-          li
+          li(class="#{app_name == 'tactile'? 'disabled': ''}")
             a(tabindex="-1", href='http://tactile-showcase.herokuapp.com') Tactile.js
-          li.disabled
+          li(class="#{app_name == 'tablestakes'? 'disabled': ''}")
             a(tabindex="-1", href='http://tablestakes-showcase.herokuapp.com') Tablestakes.js
-          li
+          li(class="#{app_name == 'trebuchet'? 'disabled': ''}")
             a(tabindex="-1", href='#') Trebuchet
+          li(class="#{app_name == 'showcase'? 'disabled': ''}")
+            a(tabindex="-1", href='http://showcase-showcase.herokuapp.com') Showcase
       .nav-collapse
         ul.nav
           li(class="#{page == 'index'? 'active': ''}")
@@ -54,7 +54,7 @@
               i.icon-white.icon-glass
               |  Style Guide
           li
-            a(href='https://github.com/activecell/tablestakes')
+            a(href='https://github.com/activecell/#{app_name}')
               i.icon-white.icon-book
               |  Source
       //

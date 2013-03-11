@@ -9,26 +9,27 @@ module.exports = class Test
   process:
     spec: null
 
-  globals: "_,d3,browser,window"
-
-
-  constructor: ->
-    @args = [
-      "#{__dirname}/../test_runners/spec",
-      "-G",
-      "-R", "spec",
-      "-s", "20",
-      "--timeout", "6000",
-      "--globals", @globals
-    ]
+  args: [
+    "#{__dirname}/../test_runners/spec",
+    "-G",
+    "-R", "spec",
+    "-s", "20",
+    "--timeout", "6000",
+    "--globals", "_,d3,browser,window"
+  ]
 
   spec: (cb) =>
-    console.log 'test spec'
     if @process.spec
       @process.spec.removeAllListeners 'exit'
       @process.spec = null
+
     @process.spec = @spawn @mocha, @args, @options
     @process.spec.on 'exit', =>
       @process.spec.removeAllListeners 'exit'
       @process.spec = null
       cb() if cb
+    process.on 'SIGTERM', =>
+      if @process.spec
+        @process.spec.kill()
+      process.exit()
+

@@ -1,2 +1,2 @@
-example_function = () ->
-  console.log 'example function'
+window.example_function = () ->
+  'ok'

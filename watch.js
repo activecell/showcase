@@ -1,7 +1,6 @@
 require('coffee-script')
 var fs = require('fs');
 var path = __dirname+'/server/watcher';
-var path2 = __dirname+'/server/config.coffee';
 var watcher;
 
 var lastStart = Date.now()
@@ -17,8 +16,8 @@ fs.watch(path+'.coffee',function() {
 });
 
 var start = function () {
+  process.stdout.write('\u001B[2J\u001B[0;0f');
   delete require.cache[path+'.coffee']
-  delete require.cache[path2]
   watcher = new (require(path))();
 };
 

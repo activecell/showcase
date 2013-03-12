@@ -2,7 +2,7 @@ global.should = require('chai').should()
 
 global.glob = {}
 glob.config = require '../server/config'
-glob.url = "http://localhost:#{glob.config.port}/"
+glob.url = "http://localhost:#{glob.config.server.port}/"
 glob.request = require 'request'
 glob.zombie = require 'zombie'
 

@@ -1,6 +1,7 @@
 module.exports = class Watcher
 
   config: require './config'
+  utils: new (require './utils')
 
   process: null
 
@@ -18,52 +19,21 @@ module.exports = class Watcher
   constructor: (options)->
     @dirs = @config.watch.dirs
     @files = @config.watch.files
-    #fix path
-    for dir,d in @dirs
-      @dirs[d] = "#{__dirname}/../#{dir}"
 
     for file in @files
-      @result.push "#{__dirname}/../#{file}"
+      @result.push file
 
-    async = []
-    for dir in @dirs
-      ((dir)=>
-        async.push (done)=>
-          @getFiles dir,done
-      )(dir)
-    @parallel async, =>
-      for file in @result
+    @utils.getDirs @config.watch.dirs, (files)=>
+      for file in files
         @watch file
       @start()
 
-  getFiles: (dir,done)->
-    @watch dir
-    @fs.readdir dir, (err,files)=>
-      dirs = []
-      if files and files[0]
-        for file in files
-          if file.split('.')[1]
-            @result.push dir+'/'+file
-          else
-            dirs.push dir+'/'+file
-        if dirs[0]
-          async = []
-          for dir in dirs
-            ((dir)=>
-              async.push (_done)=>
-                @getFiles dir,_done
-            )(dir)
-          @parallel async, =>
-            done()
-        else
-          done()
-      else
-        done()
   watch: (file)->
     @fs.watch file,(event,filename)=>
       if Date.now() - @lastStart > @timeout
         @lastStart = Date.now()
         @kill =>
+          process.stdout.write '\u001B[2J\u001B[0;0f'
           @start()
 
   destroy: (cb)->

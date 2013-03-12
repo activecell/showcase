@@ -2,7 +2,7 @@ module.exports = (env)->
   assert = require 'assert'
   request = require 'request'
   config = require '../../server/config'
-  server_url = "http://localhost:#{config.port}"
+  server_url = "http://localhost:#{config.server.port}"
 
   describe 'server', ->
 

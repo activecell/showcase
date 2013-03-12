@@ -10,10 +10,11 @@ module.exports = class Server
 
   constructor: (options) ->
     global.glob = @globals
+    glob.server = @
     @router = new (require './router')
     @build = new (require './build')
 
-    @port = glob.config.port
+    @port = glob.config.server.port
     @app = @express()
     @app.configure =>
       @app.set 'port', @port
@@ -35,9 +36,28 @@ module.exports = class Server
         console.log  'server start on port '+@port
         cb() if cb
 
+  show_lint_errors: (cb)->
+    if @lint_errors
+      errors = false
+      for path of @lint_errors
+        if @lint_errors[path][0]
+          errors = true
+
+      if errors
+        console.log 'Lint errors:'
+        for path of @lint_errors
+          if @lint_errors[path][0]
+            console.log "  #{path}:"
+            for error in @lint_errors[path]
+              console.log "    #{error.lineNumber}: #{error.message}"
+      else
+        console.log 'Lint: success'
+    cb() if cb
+
   start: (cb)->
     @build.compile =>
       @listen =>
         @build.report =>
           @build.spec =>
-            cb() if cb
+            @show_lint_errors =>
+              cb() if cb

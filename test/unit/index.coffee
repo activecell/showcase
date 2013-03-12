@@ -2,7 +2,7 @@ module.exports = (env)->
   global.assert = require 'assert'
   zombie = require 'zombie'
   config = require '../../server/config'
-  server_url = "http://localhost:#{config.port}"
+  server_url = "http://localhost:#{config.server.port}"
 
   describe 'unit tests', ->
     before (done)->

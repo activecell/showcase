@@ -2,7 +2,7 @@ module.exports = class Test
 
   spawn: require("child_process").spawn
 
-  mocha: "#{glob.root}/node_modules/mocha/bin/mocha"
+  mocha: glob.config.bin.mocha
   options:
     stdio: "inherit"
 
@@ -10,7 +10,7 @@ module.exports = class Test
     spec: null
 
   args: [
-    "#{__dirname}/../test_runners/spec",
+    glob.config.path.test_runners.spec,
     "-G",
     "-R", "spec",
     "-s", "20",

@@ -6,11 +6,6 @@ module.exports = class Coffee
   coffee: glob.config.bin.coffee
   path: glob.config.path.coffee
 
-  cmd:
-    src:
-      join: null
-      error: null
-
   constructor: ->
 
     @cmd =
@@ -27,29 +22,38 @@ module.exports = class Coffee
   compile_src: (cb) =>
     @fs.unlink @path.src.to, =>
       @exec @cmd.src.join, (err,stdout,stderr) =>
-        if stderr
+        if err
+          console.error err
+          process.exit()
+        else if stderr
           @exec @cmd.src.error, (err,stdout,stderr) =>
-            console.log 'coffee err: ',stderr
-            cb() if cb
+            console.error stderr
+            process.exit()
         else
           cb() if cb
 
   compile_tests: (cb) =>
     @fs.unlink @path.test.to, =>
       @exec @cmd.test.join, (err,stdout,stderr) ->
-        if stderr
+        if err
+          console.error err
+          process.exit()
+        else if stderr
           @exec @cmd.test.error, (err,stdout,stderr) ->
-            console.log 'coffee err: ',stderr
-            cb()
+            console.error stderr
+            process.exit()
         else
           cb()
 
   compile_examples: (cb) =>
     @fs.unlink @path.examples.to, =>
       @exec @cmd.examples.compile, (err,stdout,stderr) ->
-        if stderr
+        if err
+          console.error err
+          process.exit()
+        else if stderr
           @exec @cmd.examples.error, (err,stdout,stderr) ->
-            console.log 'coffee err: ',stderr
-            cb()
+            console.error stderr
+            process.exit()
         else
           cb()

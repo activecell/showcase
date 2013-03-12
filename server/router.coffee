@@ -4,13 +4,14 @@ module.exports = class Router
   fs: require 'fs'
   coffeelint: require 'coffeelint'
   kss: require 'kss'
-  jade: require 'jade'
   #parallel: require('async').parallel
+
+  utils: new (require './utils')
 
   path:
     dist:
-      js: "#{glob.root}/dist/#{glob.config.name}.js"
-      css: "#{glob.root}/dist/#{glob.config.name}.css"
+      js: "#{glob.config.root}/dist/#{glob.config.name}.js"
+      css: "#{glob.config.root}/dist/#{glob.config.name}.css"
 
   dist:
     js: ''
@@ -18,7 +19,6 @@ module.exports = class Router
 
   init: (app,cb)->
     app.get '/', @root
-    app.get '/pid', @pid
     app.get '/documentation', @documentation
     app.get '/test', @test
     app.get '/coverage', @coverage
@@ -38,13 +38,6 @@ module.exports = class Router
       page: 'index'
       app_name: glob.config.name
 
-  pid: (req,res)=>
-    if req.query.secret is @config.secret
-      res.send
-        pid: process.pid
-    else
-      res.send 401
-
   documentation: (req,res)=>
     docs = {}
     docsPath = "#{__dirname}/../examples/public/docs/"
@@ -62,30 +55,8 @@ module.exports = class Router
 
   #FIXME
   test: (req,res)=>
-    errors = {}
-    pathes = {}
-
-    path = "#{__dirname}/../src/coffee/"
-    files = @fs.readdirSync path
-    for f in files
-      contents = @fs.readFileSync path + f, 'utf-8'
-      errors[f] = @coffeelint.lint contents
-
-    path2="#{__dirname}/../examples/public/coffee/"
-    files2 = @fs.readdirSync path2
-    for t in files2
-      contents = @fs.readFileSync path2 + t, 'utf-8'
-      errors[t] = @coffeelint.lint contents
-
-    path3="#{__dirname}/../server/"
-    files3 = @fs.readdirSync path3
-    for d in files3
-      if d.substr(-7) is ".coffee"
-        contents = @fs.readFileSync path3 + d, 'utf-8'
-        errors[d] = @coffeelint.lint contents
-
     res.render 'test'
-      errors: errors
+      errors: glob.server.lint_errors
       page: 'mocha'
       app_name: glob.config.name
 
@@ -101,35 +72,11 @@ module.exports = class Router
     options =
       markdown: false
     @kss.traverse "#{__dirname}/../src/", options, (err, styleguide)=>
-      @getSections styleguide.section(), (sections)=>
+      @utils.getSections styleguide.section(), (sections)=>
         res.render 'styleguide'
           sections: sections
           page: 'styleguide'
           app_name: glob.config.name
-
-  getSections: (sections, cb) ->
-    jadeDir = "#{__dirname}/../examples/views/sections/"
-    for section in sections
-      section.data.filename = 'tables.scss'
-      section.data.description = section.data.description
-        .replace(/\n/g, "<br />")
-      jade = null
-      try
-        jadePath = "#{jadeDir}#{section.reference()}.jade"
-        jade = @fs.readFileSync jadePath
-      if jade
-        locals =
-          section: section
-          className: '$modifier'
-        html = @jade.compile(jade, {pretty: true})(locals)
-        section.data.example = html
-        for modifier in section.modifiers()
-          a = {className: modifier.className()}
-          modifier.data.example = @jade.compile(
-            jade,
-            {pretty: true}
-          )(a)
-    cb sections if cb
 
   performance: (req,res)=>
     res.render 'performance'

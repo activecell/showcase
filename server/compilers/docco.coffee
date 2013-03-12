@@ -16,5 +16,8 @@ module.exports = class Docco
         for file in files
           @fs.unlinkSync @path.to+file
       @exec @cmd, (err)=>
-        console.log err if err
-        cb() if cb
+        if err
+          console.error err
+          process.exit()
+        else
+          cb() if cb

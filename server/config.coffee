@@ -1,31 +1,44 @@
 module.exports = config = {}
 
 config.name = name = 'showcase'
-
-config.secret = 'secretstring'
-config.port = process.env.PORT or 5000
-config.css_engine = 'scss'
 config.root = root = "#{__dirname}/.."
+
+#____________________________________server____________________________________#
+config.server =
+  secret: 'secretstring'
+  port: process.env.PORT or 5000
+  css_engine: 'scss'
 
 #____________________________________watch_____________________________________#
 config.watch =
   dirs: [
-    'server'
-    'src'
-    'test'
-    'examples/public/coffee'
-    'examples/views'
-    'examples/public/libs'
+    "#{root}/server"
+    "#{root}/src"
+    "#{root}/test"
+    "#{root}/examples/public/coffee"
+    "#{root}/examples/views"
+    "#{root}/examples/public/libs"
   ]
   files: [
-    'start.js'
+    "#{root}/start.js"
   ]
+
+#____________________________________lint_____________________________________#
+config.lint = [
+  "#{root}/src/coffee"
+  "#{root}/server"
+  "#{root}/examples/public/coffee"
+]
 
 #____________________________________path_____________________________________#
 config.path =
   temp: temp = "#{root}/temp"
   views: "#{root}/examples/views"
   public: "#{root}/examples/public/"
+  test_runners:
+    cover_unit: "#{root}/server/test_runners/cover_unit"
+    cover_integration: "#{root}/server/test_runners/cover_integration"
+    spec: "#{root}/server/test_runners/spec",
 
 #________________________jscoverage___________________________#
 config.path.jscoverage =
@@ -70,11 +83,10 @@ config.path.css =
     #from: null
     #to: null
 
-
 #____________________________________bin_____________________________________#
 config.bin =
   jscov: "#{root}/node_modules/jscoverage/bin/jscoverage"
   mocha: "#{root}/node_modules/mocha/bin/mocha"
   coffee: "#{root}/node_modules/coffee-script/bin/coffee"
-  #docco: "#{root}/node_modules/docco/bin/docco"
-  docco: "#{root}/server/libs/docco/bin/docco"
+  docco: "#{root}/libs/docco/bin/docco"
+

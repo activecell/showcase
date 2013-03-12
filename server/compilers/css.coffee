@@ -6,7 +6,7 @@ module.exports = class Css
   path: glob.config.path.css
 
   compile_src: (cb) =>
-    @["compile_src_#{glob.config.css_engine}"] =>
+    @["compile_src_#{glob.config.server.css_engine}"] =>
       cb() if cb
 
   compile_src_scss: (cb) =>
@@ -14,8 +14,8 @@ module.exports = class Css
       scssFile = '' unless scssFile?
       @sass.render scssFile.toString(), (err, css) =>
         if err
-          console.log err
-          cb() if cb
+          console.error err
+          process.exit()
         else
           @fs.writeFile @path.src.to, css, =>
             cb() if cb

@@ -10,9 +10,7 @@ module.exports = class JSCoverage
 
   path: glob.config.path.jscoverage
 
-  globals: "_,
-    d3,
-    browser, window,
+  globals: "_,d3,browser,window,
     _$jscoverage,_$jscoverage_cond,_$jscoverage_done,_$jscoverage_init
   "
 
@@ -32,14 +30,14 @@ module.exports = class JSCoverage
       html_cov:
         unit:
           args: [
-            "#{__dirname}/../test_runners/cover_unit",
+            glob.config.path.test_runners.cover_unit,
             "-R", "html-cov",
             "--timeout", "6000",
             "--globals", @globals
           ]
         integration:
           args: [
-            "#{__dirname}/../test_runners/cover_integration",
+            glob.config.path.test_runners.cover_integration,
             "-R", "html-cov",
             "--timeout", "6000",
             "--globals", @globals

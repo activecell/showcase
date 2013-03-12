@@ -58,4 +58,5 @@ config.bin =
   jscov: "#{root}/node_modules/jscoverage/bin/jscoverage"
   mocha: "#{root}/node_modules/mocha/bin/mocha"
   coffee: "#{root}/node_modules/coffee-script/bin/coffee"
-  docco: "#{root}/node_modules/docco/bin/docco"
+  #docco: "#{root}/node_modules/docco/bin/docco"
+  docco: "#{root}/server/libs/docco/bin/docco"

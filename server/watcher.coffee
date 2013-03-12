@@ -40,23 +40,25 @@ module.exports = class Watcher
     @watch dir
     @fs.readdir dir, (err,files)=>
       dirs = []
-      for file in files
-        if file.split('.')[1]
-          @result.push dir+'/'+file
+      if files and files[0]
+        for file in files
+          if file.split('.')[1]
+            @result.push dir+'/'+file
+          else
+            dirs.push dir+'/'+file
+        if dirs[0]
+          async = []
+          for dir in dirs
+            ((dir)=>
+              async.push (_done)=>
+                @getFiles dir,_done
+            )(dir)
+          @parallel async, =>
+            done()
         else
-          dirs.push dir+'/'+file
-      if dirs[0]
-        async = []
-        for dir in dirs
-          ((dir)=>
-            async.push (_done)=>
-              @getFiles dir,_done
-          )(dir)
-        @parallel async, =>
           done()
       else
         done()
-
   watch: (file)->
     @fs.watch file,(event,filename)=>
       if Date.now() - @lastStart > @timeout

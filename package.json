@@ -20,8 +20,6 @@
         "request": "2.14.0",
         "coffeelint": "",
         "coffeestand": "",
-        "docco":"",
-        "pygments":"",
         "zombie":"",
         "chai":"",
         "jscoverage": "",

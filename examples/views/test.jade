@@ -88,9 +88,11 @@ html
               li.nav-header
                 | Tests
               li
-                | <a href="#mocha">Mocha test</a>
+                | <a href="#unit">unit tests</a>
               li
-                | <a href="#coffeelint">Coffeelint test</a>
+                | <a href="#integration">integration tests</a>
+              li
+                | <a href="#coffeelint">Coffeelint tests</a>
         .span9
           #mocha
           script
@@ -154,7 +156,3 @@ html
                   |  errors and 
                   span.cnt= warn_cnt
                   |  warnings
-      .row
-        .span3
-          .span9
-            pre= lint

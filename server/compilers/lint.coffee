@@ -6,6 +6,8 @@ module.exports = class Lint
   fs: require 'fs'
   spawn: require('child_process').spawn
 
+  coffeelint: require 'coffeelint'
+
   path: "#{glob.root}/temp/lint.txt"
   command: 'coffeelint'
   args: [

@@ -69,7 +69,10 @@ module.exports = class JSCoverage
       @process.report_unit.stdout.on "data", (data) =>
         html += data.toString()
       @process.report_unit.on "exit", (err, stdout, stderr) =>
-        @fs.writeFile @path.html_cov.unit, html, =>
+        start = html.indexOf("<body>")+6
+        end = html.indexOf("</body></html>")
+        body = html.substr(start, end)
+        @fs.writeFile @path.html_cov.unit, body, =>
           cb() if cb
 
   report_integration: (cb) =>

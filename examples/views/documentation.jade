@@ -5,7 +5,8 @@ html
     include includes/head
   body
     include includes/toppanel
-    .docco
-      each doc in docs
-        if doc.length > 0
-            p!= doc
+    .container
+      .docco
+        each doc in docs
+          if doc.length > 0
+              p!= doc

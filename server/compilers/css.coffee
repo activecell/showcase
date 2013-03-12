@@ -3,15 +3,7 @@ module.exports = class Css
   fs: require 'fs'
   sass: require 'node-sass'
 
-  path:
-    src:
-      include_paths: [ "#{glob.root}/src/scss/"]
-      from: "#{__dirname}/../src/scss/#{glob.config.name}.scss"
-      to: "#{__dirname}/../dist/#{glob.config.name}.css"
-    #TODO
-    #examples:
-      #from: null
-      #to: null
+  path: glob.config.path.css
 
   compile_src: (cb) =>
     @["compile_src_#{glob.config.css_engine}"] =>

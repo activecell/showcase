@@ -53,6 +53,24 @@ config.path.coffee =
     from: "#{root}/examples/public/coffee/"
     to: "#{root}/examples/public/js/"
 
+#________________________docco_______________________________#
+config.path.docco =
+  #TODO subfolders
+  from: "#{root}/src/coffee/*.coffee"
+  to: "#{root}/examples/public/docs/"
+
+#_________________________css________________________________#
+config.path.css =
+  src:
+    include_paths: [ "#{root}/src/scss/"]
+    from: "#{root}/src/scss/#{name}.scss"
+    to: "#{root}/dist/#{name}.css"
+  #TODO
+  #examples:
+    #from: null
+    #to: null
+
+
 #____________________________________bin_____________________________________#
 config.bin =
   jscov: "#{root}/node_modules/jscoverage/bin/jscoverage"

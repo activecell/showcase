@@ -60,6 +60,7 @@ module.exports = class Router
       page: 'documentation'
       app_name: glob.config.name
 
+  #FIXME
   test: (req,res)=>
     errors = {}
     pathes = {}
@@ -83,38 +84,18 @@ module.exports = class Router
         contents = @fs.readFileSync path3 + d, 'utf-8'
         errors[d] = @coffeelint.lint contents
 
-    try
-      lint = @fs.readFileSync __dirname+'/../test/reports/lint.txt'
-
     res.render 'test'
       errors: errors
       page: 'mocha'
-      lint: lint
       app_name: glob.config.name
 
   coverage: (req,res)=>
-    cover = {}
     coverPath = "#{glob.config.path.jscoverage.coverage_reports}/unit.html"
-    htmlBody = @fs.readFileSync coverPath, 'utf-8'
-    start = htmlBody.indexOf("<body>")+6
-    end = htmlBody.indexOf("</body></html>")
-    testText = htmlBody.substr(start, end)
-    #console.log testText
-
-    cover = testText
 
     res.render 'coverage'
-      cover: cover
+      cover: @fs.readFileSync(coverPath, 'utf-8')
       page: 'coverage'
       app_name: glob.config.name
-
-    #report = ''
-    #try
-      #destDir = __dirname+'/../test/reports/coverage.html'
-      #report = glob.@fs.readFileSync destDir
-    #res.setHeader 'Content-Type', 'text/html'
-    #res.setHeader 'Content-Length', report.length
-    #res.end report
 
   styleguide: (req,res)=>
     options =

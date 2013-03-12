@@ -1,6 +1,5 @@
-# aa2
+#Documentation
 
-# documentation
-
+#example_function
 window.example_function = () ->
   'ok'

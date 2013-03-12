@@ -1,17 +1,20 @@
 module.exports = class Docco
 
+  fs: require 'fs'
   exec: require('child_process').exec
   docco: glob.config.bin.docco
 
-  path:
-    #TODO subfolders
-    from: "#{glob.root}/src/coffee/*.coffee"
-    to: "#{glob.root}/examples/public/docs/"
+  path: glob.config.path.docco
 
   constructor: (options) ->
     @cmd = "#{@docco} #{@path.from} -o #{@path.to}"
 
   compile: (cb)=>
-    @exec @cmd, (err)=>
-      console.log err if err
-      cb() if cb
+    #TODO subfolders
+    @fs.readdir @path.to, (err,files)=>
+      if files and files[0]
+        for file in files
+          @fs.unlinkSync @path.to+file
+      @exec @cmd, (err)=>
+        console.log err if err
+        cb() if cb

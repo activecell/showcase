@@ -32,19 +32,6 @@ else
 fi
 
 #
-# Check for python-pygments (using by docco)
-#
-if test ! $(which python-pygments); then
-  echo "  x You need to install python-pygments for docco. If you use apt-get, you can run:"
-  echo "    sudo apt-get install python-pygments"
-  echo "  , or you can try something like"
-  echo "    brew install python-pygments"
-  exit
-else
-  echo "  + npm found."
-fi
-
-#
 # Install from package file
 #
   echo "Installing from package.json."

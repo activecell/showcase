@@ -56,6 +56,6 @@ module.exports = class Watcher
 
   start: ->
     @lastStart = Date.now()
-    @process = @spawn 'node', ["#{__dirname}/../start.js"],
+    @process = @spawn 'node', [@config.path.runners.start],
       stdio: 'inherit'
       stderr: 'inherit'

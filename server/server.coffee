@@ -39,25 +39,28 @@ module.exports = class Server
   show_lint_errors: (cb)->
     if @lint_errors
       errors = false
+      length = 0
       for path of @lint_errors
         if @lint_errors[path][0]
           errors = true
+        else
+          length++
 
       if errors
-        console.log 'Lint errors:'
+        console.log "Lint: #{length} files success,"
         for path of @lint_errors
           if @lint_errors[path][0]
             console.log "  #{path}:"
             for error in @lint_errors[path]
               console.log "    #{error.lineNumber}: #{error.message}"
       else
-        console.log 'Lint: success'
+        console.log "Lint: #{length} files success"
     cb() if cb
 
   start: (cb)->
-    @build.compile =>
-      @listen =>
-        @build.report =>
-          @build.spec =>
-            @show_lint_errors =>
+    @build.compile (err)=>
+      @listen (err)=>
+        @build.report (err)=>
+          @build.spec (err)=>
+            @show_lint_errors (err)=>
               cb() if cb

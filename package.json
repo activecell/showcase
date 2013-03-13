@@ -3,8 +3,8 @@
     "version": "0.0.9",
     "private": true,
     "scripts": {
-        "test": "node test.js",
-        "start": "node watch.js"
+        "test": "node server/runners/test.js",
+        "start": "node server/runners/watch.js"
     },
     "engines": {
         "node": "0.8.14",

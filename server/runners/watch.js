@@ -1,6 +1,6 @@
 require('coffee-script')
 var fs = require('fs');
-var path = __dirname+'/server/watcher';
+var path = __dirname+'/../watcher';
 var watcher;
 
 var lastStart = Date.now()

@@ -35,10 +35,12 @@ config.path =
   temp: temp = "#{root}/temp"
   views: "#{root}/examples/views"
   public: "#{root}/examples/public/"
+  runners:
+    start: "#{root}/server/runners/start.js"
   test_runners:
-    cover_unit: "#{root}/server/test_runners/cover_unit"
-    cover_integration: "#{root}/server/test_runners/cover_integration"
-    spec: "#{root}/server/test_runners/spec",
+    cover_unit: "#{root}/server/runners/cover_unit"
+    cover_integration: "#{root}/server/runners/cover_integration"
+    spec: "#{root}/server/runners/spec",
 
 #________________________jscoverage___________________________#
 config.path.jscoverage =
@@ -88,5 +90,5 @@ config.bin =
   jscov: "#{root}/node_modules/jscoverage/bin/jscoverage"
   mocha: "#{root}/node_modules/mocha/bin/mocha"
   coffee: "#{root}/node_modules/coffee-script/bin/coffee"
-  docco: "#{root}/libs/docco/bin/docco"
-
+  #docco: "#{root}/libs/docco/bin/docco"
+  docco: "#{root}/server/libs/docco/bin/docco"

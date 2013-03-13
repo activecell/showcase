@@ -34,7 +34,8 @@ config.lint = [
 config.path =
   temp: temp = "#{root}/temp"
   views: "#{root}/examples/views"
-  public: "#{root}/examples/public/"
+  public: "#{root}/examples/public"
+  dist: "#{root}/dist"
   runners:
     start: "#{root}/server/runners/start.js"
   test_runners:

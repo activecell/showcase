@@ -16,6 +16,7 @@ module.exports = class Build
   constructor: (options) ->
     try
       @fs.mkdirSync glob.config.path.temp
+      @fs.mkdirSync glob.config.path.dist
     @functions =
       compilers: [
         @coffee.compile_src

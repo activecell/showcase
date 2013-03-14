@@ -5,8 +5,7 @@
 # Checks for dependencies so you can get rolling with ActiveCell straight away
 
 echo ""
-echo "  tabestakes.js"
-echo "  A bad-ass interactive grid platform."
+echo "  striker"
 echo ""
 
 #
@@ -32,7 +31,18 @@ else
 fi
 
 #
-# Install from package file
+# Check for phantomjs
 #
-  echo "Installing from package.json."
-  npm install
+if test ! $(which phantomjs); then
+  echo "  x You need to install phantomjsm. If you use Homebrew, you can run:"
+  echo "    brew install phantomjs"
+  exit
+else
+  echo "  + phantomjs found."
+fi
+
+#
+# Install from packages
+#
+echo "Installing from package.json"
+npm install

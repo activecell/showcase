@@ -1,5 +1,0 @@
-deployment:
-  showcase:
-    branch: master
-    heroku:
-      appname: appname

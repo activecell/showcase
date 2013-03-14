@@ -15,7 +15,7 @@ Documentation is still in progress.
 
 2. Create symlinks to vendors and bootstrap script (avoid copy-paste)
 
-`mkdir public && ln -s node_modules/showcase/public/vendor public/vendor`
+`mkdir public && ln -s ../node_modules/showcase/public/vendor public/vendor`
 `ln -s node_modules/showcase/script script`
 
 3. Setup Application & Grunt

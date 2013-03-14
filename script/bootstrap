@@ -33,5 +33,5 @@ fi
 #
 # Install from package file
 #
-  echo "Installing from package.json."
-  npm install
+echo "Installing from package.json."
+npm install

@@ -7,13 +7,14 @@
   },
   "dependencies": {
     "coffee-script": "1.6.1",
+    "nodemon": "0.7.2",
     "express": "3.1.0",
-    "jade": "latest",
-    "nodemon": "0.7.2"
+    "jade": ""
   },
   "devDependencies": {
     "supertest": "~0.5.1",
-    "mocha": "latest",
-    "chai": "latest"
+    "mocha": "",
+    "chai": "",
+    "passport-github": "~0.1.3"
   }
 }

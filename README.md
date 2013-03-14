@@ -9,7 +9,7 @@ Documentation is still in progress.
 
 ```json
 "depenedncies": {
-  "showcase": "git+https://github.com/activecell/showcase.git"
+  "showcase": "git+https://activecell-machine-user:NYVy98BbBb6Lae3DAdfWSLCQ@github.com/activecell/showcase#new"
 }
 ```
 

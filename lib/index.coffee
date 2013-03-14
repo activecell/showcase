@@ -23,7 +23,8 @@ module.exports = (dirname) ->
   app.use(app.router)
   app.use(express.errorHandler())
 
-  require('./auth')(app, passport)
+  # Disable for waiting valid github keys
+  # require('./auth')(app, passport)
 
   # Add custom configuration to express server
   # And start server on selected port

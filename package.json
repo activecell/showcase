@@ -11,7 +11,8 @@
     "express": "3.1.0",
     "jade": "",
     "passport": "~0.1.16",
-    "passport-github": "~0.1.3"
+    "passport-github": "~0.1.3",
+    "testem": "0.2.70"
   },
   "devDependencies": {
     "supertest": "~0.5.1",

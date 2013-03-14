@@ -31,8 +31,18 @@ else
 fi
 
 #
+# Check for phantomjs
+#
+if test ! $(which phantomjs); then
+  echo "  x You need to install phantomjsm. If you use Homebrew, you can run:"
+  echo "    brew install phantomjs"
+  exit
+else
+  echo "  + phantomjs found."
+fi
+
+#
 # Install from packages
 #
 echo "Installing from package.json"
 npm install
-npm install -g grunt-cli testem

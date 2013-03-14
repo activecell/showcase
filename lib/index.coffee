@@ -2,7 +2,7 @@ express  = require('express')
 http     = require('http')
 path     = require('path')
 spawn    = require('child_process').spawn
-passport = require('./passport')
+passport = require('passport')
 
 module.exports = (dirname) ->
   app = express()
@@ -23,7 +23,7 @@ module.exports = (dirname) ->
   app.use(app.router)
   app.use(express.errorHandler())
 
-  require('./routes')(app, passport)
+  require('./auth')(app, passport)
 
   # Add custom configuration to express server
   # And start server on selected port

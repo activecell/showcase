@@ -31,7 +31,8 @@ else
 fi
 
 #
-# Install from package file
+# Install from packages
 #
-echo "Installing from package.json."
+echo "Installing from package.json"
 npm install
+npm install -g grunt-cli testem

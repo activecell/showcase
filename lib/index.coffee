@@ -1,6 +1,7 @@
 express = require('express')
 http    = require('http')
 path    = require('path')
+spawn   = require('child_process').spawn
 
 module.exports = (dirname) ->
   app = express()
@@ -19,9 +20,13 @@ module.exports = (dirname) ->
 
   # Add custom configuration to express server
   # And start server on selected port
-  app.setup = (cb) ->
+  app.setup = (gruntTask, cb) ->
     cb()
     http.createServer(app).listen app.get('port'), ->
       console.log('** Server listening on port %d in %s mode **\n', app.get('port'), app.get('env'))
+
+    if gruntTask
+      grunt = spawn('grunt', ['-f', path.join(dirname, 'Gruntfile.coffee'), gruntTask])
+      grunt.stdout.on('data', console.info)
 
   app

@@ -5,7 +5,7 @@ expect  = require('chai').expect
 request = require('supertest')
 app     = require('../index')(__dirname)
 
-app.setup ->
+app.setup null, ->
   app.get '/', (req, res) ->
     res.json(200, status: 'OK')
 

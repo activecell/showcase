@@ -1,1 +1,0 @@
-./node_modules/showcase/node_modules/nodemon/nodemon.js -w app.coffee -w Gruntfile.coffee -w src app.coffee

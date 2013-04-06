@@ -3,9 +3,9 @@ process.env.PORT     ||= 5001
 
 expect  = require('chai').expect
 request = require('supertest')
-app     = require('../index')(__dirname)
+app     = require('../index').app(__dirname)
 
-app.setup null, ->
+app.setup ->
   app.get '/', (req, res) ->
     res.json(200, status: 'OK')
 

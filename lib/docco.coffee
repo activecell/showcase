@@ -9,4 +9,4 @@ module.exports = (options = {}) ->
 
   exec "#{__dirname}/../node_modules/docco/bin/docco #{output} #{files}", (err, stdout, stderr) ->
     console.log('docco exec error: ' + err || stderr) if err or stderr
-    console.log('docco: ' + stdout)
+    console.log stdout.replace(/: ([\w|\/\.]*)/gm, '')

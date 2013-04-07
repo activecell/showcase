@@ -4,11 +4,11 @@ prepareData = (data) ->
   data = data.toString()
   data.slice(0, data.lastIndexOf('\n'))
 
-module.exports = ->
+module.exports = (appPath) ->
   exec 'lsof -i :5000', (err, stdout, stderr) ->
     if stdout.length is 0
       process.env.NODE_ENV = "test"
-      require('../app')
+      require(appPath) # start app
 
     process.nextTick ->
       casperjs = spawn('casperjs', ['test'].concat(process.argv.slice(2)))

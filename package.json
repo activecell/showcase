@@ -1,6 +1,6 @@
 {
   "name": "showcase",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "private": true,
   "engines": {
     "node": "0.10.x"
@@ -14,10 +14,11 @@
     "hbs": "2.1.0",
     "passport": "~0.1.16",
     "passport-github": "~0.1.3",
-    "underscore": "~1.4.4"
+    "underscore": "~1.4.4",
+    "docco": "~0.6.2"
   },
   "devDependencies": {
-    "supertest": "~0.5.1",
+    "supertest": "",
     "mocha": "",
     "chai": ""
   }

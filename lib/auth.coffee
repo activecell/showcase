@@ -21,12 +21,13 @@ module.exports = (app, passport) ->
   #   profile), and invoke a callback with a user object.
   passport.use new GitHubStrategy {
     clientID: GITHUB_CLIENT_ID,
-    clientSecret: GITHUB_CLIENT_SECRET
+    clientSecret: GITHUB_CLIENT_SECRET,
+    callbackURL: '/auth/github/callback'
   }, (accessToken, refreshToken, profile, done) ->
     # asynchronous verification, for effect...
     process.nextTick ->
-      # To keep the example simple, the user's GitHub profile is returned to
-      # represent the logged-in user.  In a typical application, you would want
+      # The user's GitHub profile is returned to
+      # represent the logged-in user. In a typical application, you would want
       # to associate the GitHub account with a user record in your database,
       # and return that user instead.
       done(null, profile)

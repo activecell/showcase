@@ -16,7 +16,10 @@ module.exports = (dirname) ->
   app.use(express.cookieParser())
   app.use(express.bodyParser())
   app.use(express.methodOverride())
-  app.use(express.session(secret: 'super secret shocase session'))
+  app.use(express.session
+    secret: 'super secret shocase session'
+    cookie: { maxAge: 60000 * 60 * 24 * 100 } # 100 days
+  )
   app.use(passport.initialize())
   app.use(passport.session())
   app.use(express.static(path.join(dirname, 'public')))

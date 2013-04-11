@@ -27,10 +27,7 @@ module.exports = (dirname) ->
   app.use(express.errorHandler())
 
   # Convention to start server
-  app.setup = (cb) ->
-    # Add custom configuration to express server
-    cb()
-
+  app.start = ->
     # Check configs to use github auth
     if app.get('github-client-id') && app.get('github-client-secret')
       require('./auth')(app, passport)

@@ -5,11 +5,13 @@ expect  = require('chai').expect
 request = require('supertest')
 app     = require('../index').app(__dirname)
 
-app.setup ->
-  app.get '/', (req, res) ->
-    res.json(200, status: 'OK')
-
 describe 'Static server', ->
+  before ->
+    app.get '/', (req, res) ->
+      res.json(200, status: 'OK')
+
+    app.start()
+
   it '/', (done) ->
     request(app)
       .get('/')

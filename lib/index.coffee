@@ -23,14 +23,17 @@ module.exports = (dirname) ->
   app.use(app.router)
   app.use(express.errorHandler())
 
-  # Disable for waiting valid github keys
-  # require('./auth')(app, passport)
-
-  # Add custom configuration to express server
-  # And start server on selected port
+  # Convention to start server
   app.setup = (cb) ->
+    # Add custom configuration to express server
     cb()
+
+    # Check configs to use github auth
+    if app.get('github-client-id') && app.get('github-client-secret')
+      require('./auth')(app, passport)
+
+    # Start server on selected port
     http.createServer(app).listen app.get('port'), ->
       console.log('** Server listening on port %d in %s mode **\n', app.get('port'), app.get('env'))
 
-  return app
+  app

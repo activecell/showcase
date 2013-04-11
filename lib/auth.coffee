@@ -1,8 +1,9 @@
 # https://github.com/jaredhanson/passport-github/tree/master/examples/login
+GitHubStrategy = require('passport-github').Strategy
+
 module.exports = (app, passport) ->
-  GitHubStrategy       = require('passport-github').Strategy
-  GITHUB_CLIENT_ID     = '8c303a4bd7db8d5da8b5'
-  GITHUB_CLIENT_SECRET = '1b72ccdcf3c24ac6ecc9ad7537636ec57d0997b3'
+  GITHUB_CLIENT_ID     = app.get('github-client-id')
+  GITHUB_CLIENT_SECRET = app.get('github-client-secret')
 
   # Passport session setup.
   #   To support persistent login sessions, Passport needs to be able to
@@ -20,8 +21,7 @@ module.exports = (app, passport) ->
   #   profile), and invoke a callback with a user object.
   passport.use new GitHubStrategy {
     clientID: GITHUB_CLIENT_ID,
-    clientSecret: GITHUB_CLIENT_SECRET,
-    callbackURL: 'http://localhost:5000/auth/github/callback'
+    clientSecret: GITHUB_CLIENT_SECRET
   }, (accessToken, refreshToken, profile, done) ->
     # asynchronous verification, for effect...
     process.nextTick ->

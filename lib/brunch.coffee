@@ -20,11 +20,21 @@ exports.defaultConfig = (config) ->
       # module wrapper
       wrapper: (path, data) ->
         if path.match(/\.(coffee|hbs)$/)
-          data = """
-          (function() {
-            #{data}
-          }).call(this);
-          """
+          if !path.match(/^test/) && data.match(/module\.exports|exports\./)
+            # commonjs wrapper
+            path = path.replace(/^src\//, '').replace(/\.(coffee|hbs)$/, '')
+            data = """
+            require.define({"#{path}": function(exports, require, module) {
+              #{data}
+            }});
+            """
+          else
+            # classic coffee-script wrapper
+            data = """
+            (function() {
+              #{data}
+            }).call(this);
+            """
         data + '\n\n'
 
   _.defaults(config, defaultConfig)

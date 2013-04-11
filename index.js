@@ -4,3 +4,4 @@ exports.casper        = require('./lib/casper');
 exports.docco         = require('./lib/docco');
 exports.path          = require('./lib/brunch').path;
 exports.defaultConfig = require('./lib/brunch').defaultConfig;
+exports.isAuth        = require('./lib/is_auth');

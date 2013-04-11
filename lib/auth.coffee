@@ -36,7 +36,9 @@ module.exports = (app, passport) ->
   #   request.  The first step in GitHub authentication will involve redirecting
   #   the user to github.com.  After authorization, GitHubwill redirect the user
   #   back to this application at /auth/github/callback
-  app.get '/auth/github', passport.authenticate('github')
+  app.get '/auth/github', passport.authenticate('github'), (req, res) ->
+    # The request will be redirected to GitHub for authentication, so this
+    # function will not be called.
 
   # GET /auth/github/callback
   #   Use passport.authenticate() as route middleware to authenticate the
@@ -52,7 +54,3 @@ module.exports = (app, passport) ->
   app.get '/logout', (req, res) ->
     req.logout()
     res.redirect('/')
-
-  app.all '*', (req, res, next) ->
-    return next() if req.isAuthenticated()
-    res.redirect('/login')

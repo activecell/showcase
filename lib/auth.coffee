@@ -46,11 +46,8 @@ module.exports = (app, passport) ->
   #   request.  If authentication fails, the user will be redirected back to the
   #   login page.  Otherwise, the primary route function function will be called,
   #   which, in this example, will redirect the user to the home page.
-  app.get '/auth/github/callback', passport.authenticate('github', { failureRedirect: '/login' }), (req, res) ->
+  app.get '/auth/github/callback', passport.authenticate('github', { failureRedirect: '/auth/github' }), (req, res) ->
     res.redirect('/')
-
-  app.get '/login', (req, res) ->
-    res.send(200, '<a href="/auth/github">Login</a>')
 
   app.get '/logout', (req, res) ->
     req.logout()

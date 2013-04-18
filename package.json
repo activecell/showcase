@@ -1,6 +1,6 @@
 {
   "name": "showcase",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "Infrustucture for activecell's front-end libraries",
   "author": "Activecell",
   "repository": {
@@ -20,7 +20,8 @@
     "passport": "~0.1.16",
     "passport-github": "~0.1.4",
     "underscore": "~1.4.4",
-    "docco": "~0.6.2"
+    "docco": "~0.6.2",
+    "kss": "~0.3.6"
   },
   "devDependencies": {
     "supertest": "",

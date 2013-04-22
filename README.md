@@ -6,7 +6,7 @@
 /_______  /|___|  /\____/ \/\_/  \___  >____  /____  >\___  >
         \/      \/                   \/     \/     \/     \/
 
-          Infrastructure for activecell's front-end libraries.
+          Bad-ass infrastructure for javascript libraries.
 ```
 
 ## How to install

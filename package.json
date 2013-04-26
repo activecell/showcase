@@ -18,7 +18,7 @@
     "express": "~3.1.1",
     "hbs": "~2.1.0",
     "passport": "~0.1.16",
-    "passport-github": "~0.1.4",
+    "passport-github": "git+https://github.com/lyatiss/passport-github.git#e6fcac7a33",
     "underscore": "~1.4.4",
     "docco": "~0.6.2",
     "kss": "~0.3.6"

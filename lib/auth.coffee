@@ -51,7 +51,6 @@ module.exports = (app, passport) ->
     res.redirect('/')
 
   app.get '/login', (req, res) ->
-    res.set('User-Agent', req.get('User-Agent'))
     res.redirect('/auth/github')
 
   app.get '/logout', (req, res) ->

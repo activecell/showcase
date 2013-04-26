@@ -9,14 +9,6 @@
           Bad-ass infrastructure for javascript libraries.
 ```
 
-## How to install
-
-```json
-"dependencies": {
-  "showcase": "~0.2.0"
-}
-```
-
 ## How to use
 
 ### Well configured express server for documentation, tests and so on

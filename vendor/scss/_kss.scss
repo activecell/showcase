@@ -1,0 +1,64 @@
+.styleguide-example .styleguide-description {
+background:#f1f1f1;
+border-bottom:1px solid #ddd;
+padding:10px 5px;
+}
+
+.styleguide-example .styleguide-description p:first-child {
+margin-top:0;
+}
+
+.styleguide-example .styleguide-description p:last-child {
+margin-bottom:0;
+}
+
+.styleguide-example .styleguide-element {
+position:relative;
+padding:20px;
+}
+
+.styleguide-example .styleguide-element + .styleguide-element {
+margin-top:-5px;
+padding-top:15px;
+border-top:1px solid #eee;
+}
+
+.styleguide-example .styleguide-element .styleguide-modifier-name {
+display:block;
+position:absolute;
+top:0;
+right:0;
+font-size:11px;
+color:#999;
+background:#f9f9f9;
+border:1px solid #eee;
+border-top:none;
+padding:5px 8px;
+}
+
+.styleguide-example .styleguide-html {
+background:#edf6f8;
+border-top:1px solid #dde7ea;
+overflow:auto;
+padding:5px 10px;
+}
+
+.styleguide-example .styleguide-html .highlight {
+background:none;
+}
+
+.styleguide-example ul.styleguide-modifiers {
+margin:0 0 0 10px;
+}
+
+.styleguide-example ul.styleguide-modifiers li {
+list-style-type:none;
+margin-left:0;
+}
+
+.styleguide-example ul.styleguide-modifiers li strong {
+font-family:Monaco, monospace;
+font-size:12px;
+font-weight:400;
+color:#222;
+}

@@ -1,0 +1,108 @@
+// Primary palette
+$primary:         #30878F;
+$primary-light:   #DAE1E9;
+$primary-dark:    #00455B;
+$secondary:       #005568;
+$secondary-light: lighten($secondary, 10%);
+$secondary-dark:  #013144;
+$green:           #c4d33e;
+$light-green:     #B4d037;
+$dark-green:      #99B718;
+
+$black:         #231F20;
+$dark-grey:     lighten($black, 25%);
+$grey:          lighten($black, 50%);
+$light-grey:    lighten($black, 75%);
+$lighter-grey:  lighten($black, 85%);
+$white:         #fff;
+
+$heading-grey:  #BFBFBF;
+$heading-black: #404040;
+
+$link-color: #006B75;
+
+$plan: lighten($primary-light, 15%);
+$border-grey: #e6e6e6;
+
+// Chart palette
+$dark-blue-10: #0B3748;
+$dark-blue-20: #254E5D;
+$dark-blue-30: #3F6672;
+$dark-blue-40: #597D88;
+$dark-blue-50: #73959D;
+$dark-blue-60: #8EADB3;
+
+$blue-10: #0C1B75;
+$blue-20: #263683;
+$blue-30: #405192;
+$blue-40: #5A6CA1;
+$blue-50: #7487B0;
+$blue-60: #8FA3BF;
+
+$azure-10: #003FC1;
+$azure-20: #2058C8;
+$azure-30: #4072D0;
+$azure-40: #608BD7;
+$azure-50: #80A5DF;
+$azure-60: #A0BFE7;
+
+$light-blue-10: #4727C0;
+$light-blue-20: #6043C8;
+$light-blue-30: #795FD0;
+$light-blue-40: #927BD8;
+$light-blue-50: #AB87E0;
+$light-blue-60: #C5B3E9;
+
+$barn-red-10: #4E0002;
+$barn-red-20: #671E20;
+$barn-red-30: #813D3F;
+$barn-red-40: #9A5C5D;
+$barn-red-50: #B47B7C;
+$barn-red-60: #CE9A9B;
+
+$scarlet-red-10: #D21E17;
+$scarlet-red-20: #D83C36;
+$scarlet-red-30: #DE5A55;
+$scarlet-red-40: #E47975;
+$scarlet-red-50: #EA9794;
+$scarlet-red-60: #F0B6B4;
+
+$alloy-orange-10: #C07200;
+$alloy-orange-20: #C98621;
+$alloy-orange-30: #D39A42;
+$alloy-orange-40: #DDAF63;
+$alloy-orange-50: #E7C384;
+$alloy-orange-60: #F1D8A6;
+
+$brown-10: #623C1C;
+$brown-20: #79593D;
+$brown-30: #90765F;
+$brown-40: #A79380;
+$brown-50: #BEB0A2;
+$brown-60: #D6CDC4;
+
+$silver-grey-10: #777777;
+$silver-grey-20: #8A8A8A;
+$silver-grey-30: #9D9D9D;
+$silver-grey-40: #B1B1B1;
+$silver-grey-50: #C4C4C4;
+$silver-grey-60: #D8D8D8;
+
+$dark-grey-10: #414343;
+$dark-grey-20: #4D4F4F;
+$dark-grey-30: #5A5B5B;
+$dark-grey-40: #676868;
+$dark-grey-50: #747474;
+$dark-grey-60: #818181;
+
+// Alert palette
+$success:         #8ac16f; // sampled from air psd
+$success-light:   #e7ffdc; // sampled from air psd
+$warning:         #eedc94; // sampled from air psd
+$warning-light:   #fce5b1; // sampled from air psd
+$danger:          #dc6e59; // sampled from air psd
+$danger-light:    #ffdacf; // sampled from air psd
+$info:            #19affe; // sampled from air psd
+$info-light:      #b8f6ff; // sampled from air psd
+$inverse:         $dark-grey-50;
+$inverse-light:   $light-grey;

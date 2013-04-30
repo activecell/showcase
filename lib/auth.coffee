@@ -22,7 +22,8 @@ module.exports = (app, passport) ->
   passport.use new GitHubStrategy {
     clientID: GITHUB_CLIENT_ID,
     clientSecret: GITHUB_CLIENT_SECRET,
-    callbackURL: '/auth/github/callback'
+    callbackURL: '/auth/github/callback',
+    userAgent: 'activecell.com'
   }, (accessToken, refreshToken, profile, done) ->
     # asynchronous verification, for effect...
     process.nextTick ->

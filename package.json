@@ -1,6 +1,6 @@
 {
   "name": "showcase",
-  "version": "0.3.1",
+  "version": "0.3.3",
   "description": "Infrustucture for activecell's front-end libraries",
   "author": "Activecell",
   "repository": {
@@ -15,10 +15,10 @@
   },
   "dependencies": {
     "coffee-script": "~1.6.2",
-    "express": "~3.1.1",
+    "express": "~3.1.2",
     "hbs": "~2.1.0",
     "passport": "~0.1.16",
-    "passport-github": "git+https://github.com/lyatiss/passport-github.git#e6fcac7a33",
+    "passport-github": "~0.1.5",
     "underscore": "~1.4.4",
     "docco": "~0.6.2",
     "kss": "~0.3.6"

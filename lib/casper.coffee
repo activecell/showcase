@@ -17,4 +17,4 @@ module.exports = (appPath) ->
       casperjs.stderr.on 'data', (data) -> console.log 'Error: ' + prepareData(data)
 
       casperjs.on 'exit', (code) ->
-        process.exit()
+        process.exit(code)

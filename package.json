@@ -21,11 +21,16 @@
     "passport-github": "~0.1.5",
     "underscore": "~1.4.4",
     "docco": "~0.6.2",
-    "kss": "~0.3.6"
+    "kss": "~0.3.6",
+    "grunt": "~0.4.1",
+    "grunt-gh-pages": "https://github.com/Aluman/grunt-gh-pages/tarball/master",
+    "grunt-docco-multi": "0.0.2",
+    "grunt-casperjs": "~1.0.9"
   },
   "devDependencies": {
     "supertest": "",
     "mocha": "",
     "chai": ""
-  }
+  },
+  "readmeFilename": "README.md"
 }

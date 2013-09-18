@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>is_auth.coffee</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="public/stylesheets/normalize.css" />
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="page">
+
+      <div class="header">
+        
+          <h1>is_auth.coffee</h1>
+        
+
+        
+          <div class="toc">
+            <h3>Table of Contents</h3>
+            <ol>
+              
+                
+                <li>
+                  <a class="source" href="auth.html">
+                    auth.coffee
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="brunch.html">
+                    brunch.coffee
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="casper.html">
+                    casper.coffee
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="docco.html">
+                    docco.coffee
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="index.html">
+                    index.coffee
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="is_auth.html">
+                    is_auth.coffee
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="kss.html">
+                    kss.coffee
+                  </a>
+                </li>
+              
+            </ol>
+          </div>
+        
+      </div>
+
+      
+        
+        
+        
+          <div class='highlight'><pre>module.<span class="function"><span class="title">exports</span></span> = (req, res, next) -&gt;
+  <span class="keyword">return</span> next() <span class="keyword">unless</span> req.app.get(<span class="string">'github-client-id'</span>) &amp;&amp; req.app.get(<span class="string">'github-client-secret'</span>)
+  <span class="keyword">return</span> next() <span class="keyword">if</span> req.isAuthenticated()
+  res.redirect(<span class="string">'/login'</span>)</pre></div>
+        
+      
+      <div class="fleur">h</div>
+    </div>
+  </div>
+</body>
+</html>

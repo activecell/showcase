@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>brunch.coffee</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="public/stylesheets/normalize.css" />
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="page">
+
+      <div class="header">
+        
+          <h1>brunch.coffee</h1>
+        
+
+        
+          <div class="toc">
+            <h3>Table of Contents</h3>
+            <ol>
+              
+                
+                <li>
+                  <a class="source" href="auth.html">
+                    auth.coffee
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="brunch.html">
+                    brunch.coffee
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="casper.html">
+                    casper.coffee
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="docco.html">
+                    docco.coffee
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="index.html">
+                    index.coffee
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="is_auth.html">
+                    is_auth.coffee
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="kss.html">
+                    kss.coffee
+                  </a>
+                </li>
+              
+            </ol>
+          </div>
+        
+      </div>
+
+      
+        
+        
+        
+          <div class='highlight'><pre>_ = require(<span class="string">'underscore'</span>)
+
+exports.<span class="function"><span class="title">path</span></span> = (paths...) -&gt;
+  escapedFiles = paths.map((pattern) -&gt;
+    pattern.replace(<span class="regexp">/[\-\[\]\/\{\}\(\)\+\?\.\\\^\$\|]/g</span>, <span class="string">"\\$&amp;"</span>)
+  ).join(<span class="string">'|'</span>)
+  <span class="keyword">new</span> RegExp(<span class="string">'^'</span> + escapedFiles)
+
+exports.<span class="function"><span class="title">defaultConfig</span></span> = (config) -&gt;
+  defaultConfig =
+    paths:
+      app: <span class="string">'src'</span>
+
+    plugins:
+      sass:
+        debug: <span class="string">'comments'</span>
+
+    modules:
+      definition: <span class="literal">false</span></pre></div>
+        
+      
+        
+        <p>module wrapper</p>
+
+        
+          <div class='highlight'><pre>      wrapper: (path, data) -&gt;
+        <span class="keyword">if</span> path.match(<span class="regexp">/\.(coffee|hbs)$/</span>)
+          <span class="keyword">if</span> !path.match(<span class="regexp">/^test/) &amp;&amp; data.match(/module\.exports|exports\./</span>)</pre></div>
+        
+      
+        
+        <p>commonjs wrapper</p>
+
+        
+          <div class='highlight'><pre>            path = path.replace(<span class="regexp">/^src\//, '').replace(/\.(coffee|hbs)$/</span>, <span class="string">''</span>)
+            data = <span class="string">"""
+            require.define({"<span class="subst">#{path}</span>": function(exports, require, module) {
+              <span class="subst">#{data}</span>
+            }});
+            """</span>
+          <span class="keyword">else</span></pre></div>
+        
+      
+        
+        <p>classic coffee-script wrapper</p>
+
+        
+          <div class='highlight'><pre>            data = <span class="string">"""
+            (function() {
+              <span class="subst">#{data}</span>
+            }).call(this);
+            """</span>
+        data + <span class="string">'\n\n'</span>
+
+  _.defaults(config, defaultConfig)</pre></div>
+        
+      
+      <div class="fleur">h</div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>index.coffee</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="public/stylesheets/normalize.css" />
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="page">
+
+      <div class="header">
+        
+          <h1>index.coffee</h1>
+        
+
+        
+          <div class="toc">
+            <h3>Table of Contents</h3>
+            <ol>
+              
+                
+                <li>
+                  <a class="source" href="auth.html">
+                    auth.coffee
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="brunch.html">
+                    brunch.coffee
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="casper.html">
+                    casper.coffee
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="docco.html">
+                    docco.coffee
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="index.html">
+                    index.coffee
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="is_auth.html">
+                    is_auth.coffee
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="kss.html">
+                    kss.coffee
+                  </a>
+                </li>
+              
+            </ol>
+          </div>
+        
+      </div>
+
+      
+        
+        
+        
+          <div class='highlight'><pre>express  = require(<span class="string">'express'</span>)
+http     = require(<span class="string">'http'</span>)
+path     = require(<span class="string">'path'</span>)
+spawn    = require(<span class="string">'child_process'</span>).spawn
+passport = require(<span class="string">'passport'</span>)
+
+module.<span class="function"><span class="title">exports</span></span> = (dirname) -&gt;
+  app = express()
+
+  app.set(<span class="string">'port'</span>, process.env.PORT || <span class="number">5000</span>)
+  app.set(<span class="string">'views'</span>, dirname + <span class="string">'/views'</span>)
+  app.set(<span class="string">'view engine'</span>, <span class="string">'hbs'</span>)
+
+  app.use(express.logger(<span class="string">'dev'</span>))
+  app.use(express.favicon())
+  app.use(express.cookieParser())
+  app.use(express.bodyParser())
+  app.use(express.methodOverride())
+  app.use(express.session
+    secret: <span class="string">'super secret shocase session'</span>
+    cookie: { maxAge: <span class="number">60000</span> * <span class="number">60</span> * <span class="number">24</span> * <span class="number">100</span> } <span class="comment"># 100 days</span>
+  )
+  app.use(passport.initialize())
+  app.use(passport.session())
+  app.use(express.static(path.join(dirname, <span class="string">'public'</span>)))
+  app.use(app.router)
+  app.use(express.errorHandler())</pre></div>
+        
+      
+        
+        <p>Convention to start server</p>
+
+        
+          <div class='highlight'><pre>  app.<span class="function"><span class="title">start</span></span> = -&gt;</pre></div>
+        
+      
+        
+        <p>Check configs to use github auth</p>
+
+        
+          <div class='highlight'><pre>    <span class="keyword">if</span> app.get(<span class="string">'github-client-id'</span>) &amp;&amp; app.get(<span class="string">'github-client-secret'</span>)
+      require(<span class="string">'./auth'</span>)(app, passport)</pre></div>
+        
+      
+        
+        <p>Start server on selected port</p>
+
+        
+          <div class='highlight'><pre>    http.createServer(app).listen app.get(<span class="string">'port'</span>), -&gt;
+      console.log(<span class="string">'** Server listening on port %d in %s mode **\n'</span>, app.get(<span class="string">'port'</span>), app.get(<span class="string">'env'</span>))
+
+  app</pre></div>
+        
+      
+      <div class="fleur">h</div>
+    </div>
+  </div>
+</body>
+</html>

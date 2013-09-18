@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>casper.coffee</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="public/stylesheets/normalize.css" />
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="page">
+
+      <div class="header">
+        
+          <h1>casper.coffee</h1>
+        
+
+        
+          <div class="toc">
+            <h3>Table of Contents</h3>
+            <ol>
+              
+                
+                <li>
+                  <a class="source" href="auth.html">
+                    auth.coffee
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="brunch.html">
+                    brunch.coffee
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="casper.html">
+                    casper.coffee
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="docco.html">
+                    docco.coffee
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="index.html">
+                    index.coffee
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="is_auth.html">
+                    is_auth.coffee
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="kss.html">
+                    kss.coffee
+                  </a>
+                </li>
+              
+            </ol>
+          </div>
+        
+      </div>
+
+      
+        
+        
+        
+          <div class='highlight'><pre>{spawn, exec} = require(<span class="string">'child_process'</span>)
+
+<span class="function"><span class="title">prepareData</span></span> = (data) -&gt;
+  data = data.toString()
+  data.slice(<span class="number">0</span>, data.lastIndexOf(<span class="string">'\n'</span>))
+
+module.<span class="function"><span class="title">exports</span></span> = (appPath) -&gt;
+  exec <span class="string">'lsof -i :5000'</span>, (err, stdout, stderr) -&gt;
+    <span class="keyword">if</span> stdout.length <span class="keyword">is</span> <span class="number">0</span>
+      process.env.NODE_ENV = <span class="string">"test"</span>
+      require(appPath) <span class="comment"># start app</span>
+
+    process.nextTick -&gt;
+      casperjs = spawn(<span class="string">'casperjs'</span>, [<span class="string">'test'</span>].concat(process.argv.slice(<span class="number">2</span>)))
+
+      casperjs.stdout.<span class="literal">on</span> <span class="string">'data'</span>, (data) -&gt; console.log prepareData(data)
+      casperjs.stderr.<span class="literal">on</span> <span class="string">'data'</span>, (data) -&gt; console.log <span class="string">'Error: '</span> + prepareData(data)
+
+      casperjs.<span class="literal">on</span> <span class="string">'exit'</span>, (code) -&gt;
+        process.exit(code)</pre></div>
+        
+      
+      <div class="fleur">h</div>
+    </div>
+  </div>
+</body>
+</html>

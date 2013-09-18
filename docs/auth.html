@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>auth.coffee</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="public/stylesheets/normalize.css" />
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="page">
+
+      <div class="header">
+        
+          <h1>auth.coffee</h1>
+        
+
+        
+          <div class="toc">
+            <h3>Table of Contents</h3>
+            <ol>
+              
+                
+                <li>
+                  <a class="source" href="auth.html">
+                    auth.coffee
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="brunch.html">
+                    brunch.coffee
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="casper.html">
+                    casper.coffee
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="docco.html">
+                    docco.coffee
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="index.html">
+                    index.coffee
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="is_auth.html">
+                    is_auth.coffee
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="kss.html">
+                    kss.coffee
+                  </a>
+                </li>
+              
+            </ol>
+          </div>
+        
+      </div>
+
+      
+        
+        <p><a href="https://github.com/jaredhanson/passport-github/tree/master/examples/login">https://github.com/jaredhanson/passport-github/tree/master/examples/login</a></p>
+
+        
+          <div class='highlight'><pre>GitHubStrategy = require(<span class="string">'passport-github'</span>).Strategy
+
+module.<span class="function"><span class="title">exports</span></span> = (app, passport) -&gt;
+  GITHUB_CLIENT_ID     = app.get(<span class="string">'github-client-id'</span>)
+  GITHUB_CLIENT_SECRET = app.get(<span class="string">'github-client-secret'</span>)</pre></div>
+        
+      
+        
+        <p>Passport session setup.
+  To support persistent login sessions, Passport needs to be able to
+  serialize users into and deserialize users out of the session.  Typically,
+  this will be as simple as storing the user ID when serializing, and finding
+  the user by ID when deserializing.  However, since this example does not
+  have a database of user records, the complete GitHub profile is serialized
+  and deserialized.</p>
+
+        
+          <div class='highlight'><pre>  passport.serializeUser  (user, done) -&gt; done(<span class="literal">null</span>, user)
+  passport.deserializeUser (obj, done) -&gt; done(<span class="literal">null</span>, obj)</pre></div>
+        
+      
+        
+        <p>Use the GitHubStrategy within Passport.
+  Strategies in Passport require a <code>verify</code> function, which accept
+  credentials (in this case, an accessToken, refreshToken, and GitHub
+  profile), and invoke a callback with a user object.</p>
+
+        
+          <div class='highlight'><pre>  passport.use <span class="keyword">new</span> GitHubStrategy {
+    clientID: GITHUB_CLIENT_ID,
+    clientSecret: GITHUB_CLIENT_SECRET,
+    callbackURL: <span class="string">'/auth/github/callback'</span>,
+    userAgent: <span class="string">'activecell.com'</span>
+  }, (accessToken, refreshToken, profile, done) -&gt;</pre></div>
+        
+      
+        
+        <p>asynchronous verification, for effect...</p>
+
+        
+          <div class='highlight'><pre>    process.nextTick -&gt;</pre></div>
+        
+      
+        
+        <p>The user&#39;s GitHub profile is returned to
+represent the logged-in user. In a typical application, you would want
+to associate the GitHub account with a user record in your database,
+and return that user instead.</p>
+
+        
+          <div class='highlight'><pre>      done(<span class="literal">null</span>, profile)</pre></div>
+        
+      
+        
+        <p>GET /auth/github
+  Use passport.authenticate() as route middleware to authenticate the
+  request.  The first step in GitHub authentication will involve redirecting
+  the user to github.com.  After authorization, GitHubwill redirect the user
+  back to this application at /auth/github/callback</p>
+
+        
+          <div class='highlight'><pre>  app.get <span class="string">'/auth/github'</span>, passport.authenticate(<span class="string">'github'</span>), (req, res) -&gt;</pre></div>
+        
+      
+        
+        <p>The request will be redirected to GitHub for authentication, so this
+function will not be called.</p>
+<p>GET /auth/github/callback
+  Use passport.authenticate() as route middleware to authenticate the
+  request.  If authentication fails, the user will be redirected back to the
+  login page.  Otherwise, the primary route function function will be called,
+  which, in this example, will redirect the user to the home page.</p>
+
+        
+          <div class='highlight'><pre>  app.get <span class="string">'/auth/github/callback'</span>, passport.authenticate(<span class="string">'github'</span>, { failureRedirect: <span class="string">'/auth/github'</span> }), (req, res) -&gt;
+    res.redirect(<span class="string">'/'</span>)
+
+  app.get <span class="string">'/login'</span>, (req, res) -&gt;
+    res.redirect(<span class="string">'/auth/github'</span>)
+
+  app.get <span class="string">'/logout'</span>, (req, res) -&gt;
+    req.logout()
+    res.redirect(<span class="string">'/'</span>)</pre></div>
+        
+      
+      <div class="fleur">h</div>
+    </div>
+  </div>
+</body>
+</html>

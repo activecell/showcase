@@ -8,13 +8,14 @@
 ## compass    - compile *.scss files to css
 ## styleguide - generate styleguide page from your *.scss files and *.hbs
 ## copy       - can copy files from src folder to dst folder
+## clean      - allow remove some files and folders
 ## watch      - watch for files and make a grunt commands if files was changes.
 ##
 ## Just uncomment code below and put it to gruntfile in your project
 
-#module.exports = (grunt) ->
-#  grunt.initConfig
-#    pkg: grunt.file.readJSON("package.json")
+module.exports = (grunt) ->
+  grunt.initConfig
+    pkg: grunt.file.readJSON("package.json")
 #
 ##    allow push files from "base" directory to github into gh-pages
 #    "gh-pages":
@@ -87,13 +88,14 @@
 ##    can copy files from src folder to dst folder
 #    copy:
 #      main:
-#        files:
-#        [
+#        files: [
 #          expand: true, cwd: "src/examples/list/", src: ["*.coffee"], dest: "ghpages/examples/"
 #        ]
-
+#
+##   allow remove some files and folders
+#    clean: ["path/to/dir/one", "path/to/dir/two", "path/to/file.ext"]
+#
 ##    There you can group above tasks as you want. See examples.
-
 #    grunt.registerTask "compile-assets", [        #grunt compile-assets - will used coffee and compass task
 #      "coffee"
 #      "compass"
@@ -114,5 +116,4 @@
 #      "gh-pages"
 #      "watch"
 #    ]
-
 #    grunt.loadNpmTasks "showcase"                 # load grunt plugins from showcase/tasks directory

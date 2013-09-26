@@ -14,6 +14,7 @@ module.exports = (grunt) ->
   doccoPath   = path.resolve __dirname, "../node_modules/grunt-docco-multi/tasks"
   ghpagesPath = path.resolve __dirname, "../node_modules/grunt-gh-pages/tasks"
   watchPath   = path.resolve __dirname, "../node_modules/grunt-contrib-watch/tasks"
+  cleanPath   = path.resolve __dirname, "../node_modules/grunt-contrib-clean/tasks"
 
   grunt.loadTasks coffeePath
   grunt.loadTasks copyPath
@@ -21,6 +22,7 @@ module.exports = (grunt) ->
   grunt.loadTasks doccoPath
   grunt.loadTasks ghpagesPath
   grunt.loadTasks watchPath
+  grunt.loadTasks cleanPath
 
   grunt.registerMultiTask "styleguide", "compiled styleguide with hbs", () ->
     done = this.async()

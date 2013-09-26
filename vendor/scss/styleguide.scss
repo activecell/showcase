@@ -41,7 +41,7 @@ body {
   
   &.textured-with-border {
     position: relative;
-    background-image: url(/images/styleguide/bg_texture.png);
+    background-image: url(../../images/styleguide/bg_texture.png);
     
     &:before, &:after {
       content: "";
@@ -75,7 +75,7 @@ body {
       float: left;
       margin: 0 auto;
       padding: 7px 30px;
-      background-image: url(/images/styleguide/bg_texture.png);
+      background-image: url(../../images/styleguide/bg_texture.png);
       
       &:before, &:after {
         content: "";

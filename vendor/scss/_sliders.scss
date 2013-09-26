@@ -82,7 +82,7 @@
     height: 18px;
     margin-top: -1px;
     border: none !important;
-    background: transparent url(/images/styleguide/sprite_air.png) -80px -10px no-repeat !important;
+    background: transparent url(../../images/styleguide/sprite_air.png) -80px -10px no-repeat !important;
     box-shadow: none;
     border-radius: 0;
   }
@@ -115,7 +115,7 @@
       width: 16px;
       height: 18px;
       border: none;
-      background: url(/images/styleguide/sprite_air.png) -80px -10px no-repeat;
+      background: url(../../images/styleguide/sprite_air.png) -80px -10px no-repeat;
       box-shadow: none;
       border-radius: 0;
     }
@@ -163,5 +163,5 @@ ul.ui-horizontal-slider {
 .ui-vertical-slider .ui-slider-handle:active, 
 .ui-horizontal-slider .ui-slider-handle:active, 
 .ui-scrollbar .ui-slider-handle:active {
-  background: url(/images/styleguide/sprite_air.png) -80px -10px no-repeat;
+  background: url(../../images/styleguide/sprite_air.png) -80px -10px no-repeat;
 }

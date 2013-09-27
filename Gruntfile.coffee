@@ -6,7 +6,7 @@ module.exports = (grunt) ->
     sass:
       styleguide:
         options:
-          style: 'expanded'
+          outputStyle: 'expanded'
         files:
           'vendor/css/styleguide.css': 'vendor/scss/styleguide.scss'
 

@@ -55,11 +55,11 @@
 #
 ##      #    compile *.scss files to css Run: grunt sass
 #      sass:
-#        styleguide:                                                       #subtask
+#        name:                                                       #subtask
 #          options:                                                        #options
-#            style: 'expanded'
+#            outputStyle: 'expanded'
 #          files:
-#            'vendor/css/styleguide.css': 'vendor/scss/styleguide.scss'#   # dst:src
+#            'dst/css/name.css': 'src/scss/name.scss'#   # dst:src
 #
 #      #    watch for files and make a grunt commands if files was changes. Run: grunt watch
 #      watch:

@@ -15,6 +15,8 @@ module.exports = (grunt) ->
   ghpagesPath = path.resolve __dirname, "../node_modules/grunt-gh-pages/tasks"
   watchPath   = path.resolve __dirname, "../node_modules/grunt-contrib-watch/tasks"
   cleanPath   = path.resolve __dirname, "../node_modules/grunt-contrib-clean/tasks"
+  symlinkPath = path.resolve __dirname, "../node_modules/grunt-contrib-symlink/tasks"
+  hbsPath     = path.resolve __dirname, "../node_modules/grunt-compile-handlebars/tasks"
 
   grunt.loadTasks coffeePath
   grunt.loadTasks copyPath
@@ -23,6 +25,8 @@ module.exports = (grunt) ->
   grunt.loadTasks ghpagesPath
   grunt.loadTasks watchPath
   grunt.loadTasks cleanPath
+  grunt.loadTasks symlinkPath
+  grunt.loadTasks hbsPath
 
   grunt.registerMultiTask "styleguide", "compiled styleguide with hbs", () ->
     done = this.async()

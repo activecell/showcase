@@ -1,7 +1,8 @@
 module.exports = (grunt) ->
   grunt.initConfig
     pkg: grunt.file.readJSON("package.json")
-#compile css file from scss
+
+    #compile css file from scss
     compass:
       compileJoined:
         options:

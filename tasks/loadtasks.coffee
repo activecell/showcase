@@ -10,7 +10,7 @@ module.exports = (grunt) ->
   path = require("path")
   coffeePath  = path.resolve __dirname, "../node_modules/grunt-contrib-coffee/tasks"
   copyPath    = path.resolve __dirname, "../node_modules/grunt-contrib-copy/tasks"
-  compassPath = path.resolve __dirname, "../node_modules/grunt-contrib-compass/tasks"
+  sassPath    = path.resolve __dirname, "../node_modules/grunt-contrib-sass/tasks"
   doccoPath   = path.resolve __dirname, "../node_modules/grunt-docco-multi/tasks"
   ghpagesPath = path.resolve __dirname, "../node_modules/grunt-gh-pages/tasks"
   watchPath   = path.resolve __dirname, "../node_modules/grunt-contrib-watch/tasks"
@@ -20,7 +20,7 @@ module.exports = (grunt) ->
 
   grunt.loadTasks coffeePath
   grunt.loadTasks copyPath
-  grunt.loadTasks compassPath
+  grunt.loadTasks sassPath
   grunt.loadTasks doccoPath
   grunt.loadTasks ghpagesPath
   grunt.loadTasks watchPath

@@ -3,10 +3,11 @@ module.exports = (grunt) ->
     pkg: grunt.file.readJSON("package.json")
 
     #compile css file from scss
-    compass:
-      compileJoined:
+    sass:
+      styleguide:
         options:
-          sassDir: 'vendor/scss'                 # path to src directory
-          cssDir:  'vendor/css'                  # path to dst folder
+          style: 'expanded'
+        files:
+          'vendor/css/styleguide.css': 'vendor/scss/styleguide.scss'
 
     grunt.loadTasks "tasks"

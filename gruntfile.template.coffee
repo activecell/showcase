@@ -5,7 +5,7 @@
 ## gh-pages           - allow push files from "base" directory to github into gh-pages
 ## docco              - generate docs from your source file
 ## coffee             - compile *.coffee files to js
-## compass            - compile *.scss files to css
+## sass               - compile *.scss files to css
 ## styleguide         - generate styleguide page from your *.scss files and *.hbs
 ## copy               - can copy files from src folder to dst folder
 ## clean              - allow remove some files and folders
@@ -52,12 +52,14 @@
 #              "test/list/file2.coffee"
 #              ]
 #
-#      #    compile *.scss files to css Run: grunt compass
-#      compass:
-#        compileJoined:
-#          options:
-#            sassDir: 'src/scss/tactile/'                 # path to src directory
-#            cssDir: 'ghpages/compiled/'                  # path to dst folder
+#
+##      #    compile *.scss files to css Run: grunt sass
+#      sass:
+#        styleguide:                                                       #subtask
+#          options:                                                        #options
+#            style: 'expanded'
+#          files:
+#            'vendor/css/styleguide.css': 'vendor/scss/styleguide.scss'#   # dst:src
 #
 #      #    watch for files and make a grunt commands if files was changes. Run: grunt watch
 #      watch:
@@ -67,9 +69,9 @@
 #            "test/**/*.coffee"
 #          ]
 #          tasks: ["coffee"]                              # task which will be make when files will be updated
-#        compass:
+#        sass:
 #          files: ["src/scss/tactile"]
-#          tasks: ["compass"]
+#          tasks: ["sass"]
 #
 #      #    NOT Grunt plugin - generate styleguide page from your *.scss files and *.hbs. Run: grunt styleguide
 #      styleguide:
@@ -123,9 +125,9 @@
 #      clean: ["path/to/dir/one", "path/to/dir/two", "path/to/file.ext"]
 #
 #      #    There you can group above tasks as you want. See examples.
-#      grunt.registerTask "compile-assets", [        #grunt compile-assets - will used coffee and compass task
+#      grunt.registerTask "compile-assets", [        #grunt compile-assets - will used coffee and sass task
 #        "coffee"
-#        "compass"
+#        "sass"
 #      ]
 #      grunt.registerTask "compile-docs", [          #grunt compile-docs  - will used docco task
 #        "docco"
